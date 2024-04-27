@@ -11,6 +11,9 @@ webview.create_window('Reproduction', app,resizable=True,width=1000,height=600 ,
 Diretorio = r"C:\\Reproduction_Folder\\music"
 Galeria = "C:\\Reproduction_Folder\\Imagens"
 
+# Functions
+
+
 existe = os.path.exists("C:\\Reproduction_Folder")
 if(existe == False):
     os.makedirs("C:\\Reproduction_Folder")
@@ -18,37 +21,6 @@ if(existe == False):
     Arquivos = open('C:/Reproduction_Folder/Img.json','x',encoding="utf-8")
 else:
     print("Arquivo Já Criado")
-
-@app.route("/",methods=["GET","POST"])
-def home():
-    return render_template("Home.html")
-
-@app.route("/Index",methods=["GET","POST"])
-def index():
-    files = list(filter(os.path.isfile, glob.glob(Diretorio + "\\*"))) 
-    files.sort(key=os.path.getctime) 
-    Mural = list(filter(os.path.isfile, glob.glob(Galeria + "\\*"))) 
-    Mural.sort(key=os.path.getctime) 
-    with open('C:/Reproduction_Folder/db.json','w',encoding="utf-8") as arquivo:
-        Escrito = str('{"Name_Music":' f"{files},'Galeria':{Mural}""}")
-        arquivo.write(Escrito.replace("\\","").replace("C:Reproduction_Foldermusic","").replace("C:Reproduction_FolderImagens","").replace("'",'"'))
-    return render_template("index.html")
-
-@app.route("/Adicionar",methods=["GET","POST"])
-def Add():
-    return render_template("Adicionar.html")
-
-@app.route("/Background",methods=["GET","POST"])
-def Bk():
-    return render_template("Backgrounds.html")
-
-@app.route("/Playlist",methods=["GET","POST"])
-def Playlist():
-    return render_template("Playlist.html")
-
-@app.route("/Sobre",methods=["GET","POST"])
-def Sob():
-    return render_template("Sobre.html")
 
 @app.route("/AddMusic",methods=["POST"])
 def AddMusic():
@@ -123,7 +95,47 @@ def Music():
         dados = json.load(meu_json)
         return jsonify(dados)
 
+# Rotas
+
+@app.route("/",methods=["GET","POST"])
+def home():
+    return render_template("Home.html")
+
+@app.route("/Index",methods=["GET","POST"])
+def index():
+    files = list(filter(os.path.isfile, glob.glob(Diretorio + "\\*"))) 
+    files.sort(key=os.path.getctime) 
+    Mural = list(filter(os.path.isfile, glob.glob(Galeria + "\\*"))) 
+    Mural.sort(key=os.path.getctime) 
+    with open('C:/Reproduction_Folder/db.json','w',encoding="utf-8") as arquivo:
+        Escrito = str('{"Name_Music":' f"{files},'Galeria':{Mural}""}")
+        arquivo.write(Escrito.replace("\\","").replace("C:Reproduction_Foldermusic","").replace("C:Reproduction_FolderImagens","").replace("'",'"'))
+    return render_template("index.html")
+
+@app.route("/Adicionar",methods=["GET","POST"])
+def Add():
+    return render_template("Adicionar.html")
+
+@app.route("/Background",methods=["GET","POST"])
+def Bk():
+    return render_template("Backgrounds.html")
+
+@app.route("/Playlist",methods=["GET","POST"])
+def Playlist():
+    return render_template("Playlist.html")
+
+@app.route("/Config",methods=["GET","POST"])
+def Sob():
+    return render_template("Config.html")
+
+@app.route("/BackgroundEscolha",methods=["GET","POST"])
+def BackgroundEscolha():
+    return render_template("BackgroundEscolha.html")
+
+@app.route("/RotaAdd",methods=["GET","POST"])
+def RotaAdd():
+    return render_template("AdicionarRotas.html")
 
 if __name__ == "__main__":
-    webview.start(debug=False,private_mode=False,http_server=True)
-    # app.run(debug=False,port=5052)
+    # webview.start(debug=False,private_mode=False,http_server=True)
+    app.run(debug=True,port=5052)

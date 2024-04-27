@@ -5,8 +5,22 @@
   padding: 0;
 }
 
+:root {
+  --color1: #E35432;
+  --color2: #6132E3;
+  --color3: #E3D432;
+  --color4: #32E3A5;
+  --color5: #732CF5;
+  --color6: #8E894F;
+  --color7: #252525;
+  --color8: #1c0325;
+
+  --white-theme: #e6e6e6;
+  --black-theme: rgba(0, 0, 0, 0.79);
+
+}
+
 body {
-  background-color: black;
   overflow-x: hidden;
 }
 
@@ -31,7 +45,17 @@ body {
   background-attachment: fixed;
   -webkit-backdrop-filter: blur(8vh);
   color: white;
-  ;
+}
+
+
+body::before{
+  content: '';
+  background-color: var(--black-theme);
+  top: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
 }
 
 iframe {
@@ -41,4 +65,336 @@ iframe {
 
 body::-webkit-scrollbar {
   width: 0px;
+}
+
+#Sidebar,#MyEdit,#Templete,#MusicaPrincipal{
+  display: none;
+}
+
+/* Sidebar */
+#Sidebar {
+  color: white;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  text-decoration: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60vh;
+  height: 100%;
+  text-align: center;
+  transform: translate(60vh);
+  transition: 1s;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#QuantideDiv,
+#TempoDiv {
+  color: #FFF;
+  text-align: center;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 1.4vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 90%;
+  display: block;
+  margin: auto;
+  margin-top: 4.5vh;
+}
+
+:is(#QuantideDiv, #TempoDiv)>h1>span {
+  display: block;
+  color: yellow;
+  text-shadow: 0.2vh 0.2vh 0.2vh black;
+}
+
+#Sidebar>a {
+  display: block;
+  margin-top: 2vh;
+  text-decoration: none;
+  text-align: left;
+  margin-left: 2vh;
+  color: #FFF;
+  flex-shrink: 0;
+  font-family: 'Holtwood One SC', serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-shadow: 0.1vh 0.1vh 0.1vh black;
+  font-size: 2vh;
+}
+
+#Sidebar>a:hover {
+  text-shadow: none;
+  color: #FFF;
+  font-family: 'Holtwood One SC', serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(180deg, #FAFF00 0%, #8EE2F4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 4vh;
+}
+
+
+#HeaderSidebar {
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+#HeaderSidebar>h1,
+#Corpo_Backgrounds>h1,
+#Caixa_de_Sobre>h2,
+#Playlist_List > h1 {
+  color: #FFF;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 4vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(180deg, #FAFF00 0%, #8EE2F4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#Corpo_Backgrounds>h1 {
+  display: block;
+  margin: auto;
+  font-size: 7vh;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  text-align: center;
+}
+
+#BtnOpen {
+  all: unset;
+  right: 0;
+  position: fixed;
+  color: white;
+  cursor: pointer;
+  z-index: 3;
+  font-size: 10vh;
+  margin-top: -2vh;
+  margin-right: 1vh;
+}
+
+#Border > div{
+  border: 0.3vh solid;
+border-image: conic-gradient(from var(--angle), rgb(201, 201, 61), yellow, rgb(192, 192, 34), rgb(255, 255, 48)) 1;
+display: block;
+margin: auto;
+margin-top: 1vh;
+font-size: 2.5vh;
+width: 80%;
+color: #ffff00;
+text-align: center;
+text-transform: uppercase;
+text-decoration: none;
+}
+
+#EscolherBK > a{
+  text-decoration: none;
+  color: yellow;
+}
+
+/* List Música */
+
+#QuebraLinha{
+  display: block;
+  padding-top: 2vh;
+}
+
+#Search::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Search{
+  resize: none;
+  background-color: var(--color8);
+  border: 0.4vh solid var(--color3);
+  border-radius: 1vh;
+  width: 80%;
+  display: block;
+  padding: 1vh;
+  margin: auto;
+}
+
+#Search::placeholder{
+  color: var(--color3);
+  text-align: center;
+  font-size: 2.8vh;
+}
+
+#Musicas{
+  margin-top: 2vh;
+}
+
+#Musicas > label{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#Musicas > label > div{
+  display: flex;
+}
+
+#Boxs{
+  height: 20vh;
+}
+
+#Boxs > img{
+  width: 13vh;
+  height: 13vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.2%;
+  border-radius: 1vh;
+}
+
+#IDss{
+  width: 10vh;
+  font-size: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#CaixaTexto{
+  margin-left: 2vh;
+  margin-top: 4.5vh;
+  font-size: 3vh;
+}
+
+
+
+#CaixaTexto > h2{
+  color: #732CF5;
+}
+
+#CaixaTexto > h3{
+  display: none;
+}
+
+#InputDiv {
+  position: absolute;
+  margin-top: -11.5vh;
+  height: 20vh;
+  right: 0;
+  margin-right: 2vh;
+}
+
+#InputDiv > input:nth-child(1){
+  background-image: url("./Arquivos/Edit.png");
+}
+#InputDiv > input:nth-child(2){
+  background-image: url("./Arquivos/Thash.png");
+}
+
+#InputDiv > input{
+  all: unset;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.2vh;
+  font-size: 0px;
+  width: 5vh;
+  height: 5vh;
+}
+
+#MusicaPrincipal{
+  background-color: var(--black-theme);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  overflow: auto;
+}
+
+#MusicaPrincipal::-webkit-scrollbar{
+  width: 0px;
+}
+
+/* Adicionar e Background */
+#Adicionar,#Background_Bk{
+  all: unset;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 20vh;
+  width: 80%;
+}
+
+#AdicionarInput,#BackgroundsText{
+  all: unset;
+  display: block;
+  margin: auto;
+  width: 80%; 
+  padding: 2vh;
+  text-align: center;
+  border: 0.2vh solid var(--color3);
+  background-color: var(--color8);
+  font-size: 2vh;
+  border-radius: 0.2vh;
+}
+
+#AdicionarButton,#Background_Bk > button{
+  all: unset;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  width: 20%;
+  text-align: center;
+  border: 0.2vh solid var(--color3);
+  background-color: var(--color8);
+  padding: 1vh;
+  color: var(--color3);
+}
+
+:is(#BackgroundsText,#AdicionarInput)::placeholder{
+  color: var(--color3);
+}
+
+#FileLabel{
+  position: absolute;
+  bottom: 0;
+  background-color: var(--color7);
+  color: var(--color1);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 2vh;
+}
+
+/* Background */
+
+#BackgroundsC{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+  overflow: auto;
+  height: 80vh;
+}
+
+#BackgroundsC::-webkit-scrollbar{
+  width: 0px;
+}
+
+#BackgroundsC > img{
+  width: 30%;
+  cursor: pointer;
+  height: 30vh;
+  margin-left: 2vh;
+  margin-top: 2vh;
 }

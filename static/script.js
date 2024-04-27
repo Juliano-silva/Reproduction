@@ -31,6 +31,7 @@ fetch("/DadosMusic").then(function (response) {
             var CaixadeTexto = document.createElement("div")
             var s = document.createElement("button")
             var Image = document.createElement("img")
+            var InputDiv = document.createElement("div")
             var Remove = document.createElement("input")
             var Edit = document.createElement("input")
             var IDNum = document.createElement("h3")
@@ -78,52 +79,96 @@ fetch("/DadosMusic").then(function (response) {
                 var MusicDados = Revolution[1]
             }
 
-            const VagalumeLetra = async () => {
-                var LINKVAGALUME = "https://api.vagalume.com.br/search.php" + "?art=" + ArtistDados + "&mus=" + MusicDados + `&apikey=${Key}`
-                const respose = await fetch(LINKVAGALUME)
-                const jsonData = await respose.json()
-                Letra.innerText = jsonData?.mus?.[0]?.text
-                if (jsonData?.mus?.[0]?.text === undefined || jsonData?.mus?.[0]?.text === "undefined") {
-                    Letra.innerHTML = `Letra desconhecida`
-                }
-                return Letra.innerText
-            }
-            VagalumeLetra()
+            // const VagalumeLetra = async () => {
+            //     var LINKVAGALUME = "https://api.vagalume.com.br/search.php" + "?art=" + ArtistDados + "&mus=" + MusicDados + `&apikey=${Key}`
+            //     const respose = await fetch(LINKVAGALUME)
+            //     const jsonData = await respose.json()
+            //     Letra.innerText = jsonData?.mus?.[0]?.text
+            //     if (jsonData?.mus?.[0]?.text === undefined || jsonData?.mus?.[0]?.text === "undefined") {
+            //         Letra.innerHTML = `Letra desconhecida`
+            //     }
+            //     return Letra.innerText
+            // }
+            // VagalumeLetra()
 
-            const Vagalume = async () => {
-                var LINKVAGALUME = "https://api.vagalume.com.br/search.php" + "?art=" + ArtistDados + "&mus=" + MusicDados + `&apikey=${Key}`
-                const respose = await fetch(LINKVAGALUME)
-                const jsonData = await respose.json()
-                Dados.innerText = jsonData?.art?.name
-                if (jsonData?.art?.name === undefined || jsonData?.art?.name === "undefined") {
-                    Dados.innerHTML = "Desconhecido"
-                }
-                return Dados.innerText;
-            }
-            Vagalume()
+            // const Vagalume = async () => {
+            //     var LINKVAGALUME = "https://api.vagalume.com.br/search.php" + "?art=" + ArtistDados + "&mus=" + MusicDados + `&apikey=${Key}`
+            //     const respose = await fetch(LINKVAGALUME)
+            //     const jsonData = await respose.json()
+            //     Dados.innerText = jsonData?.art?.name
+            //     if (jsonData?.art?.name === undefined || jsonData?.art?.name === "undefined") {
+            //         Dados.innerHTML = "Desconhecido"
+            //     }
+            //     return Dados.innerText;
+            // }
+            // Vagalume()
 
             var Id = i
             Dados.id = `Dados${Id}`
             Letra.id = `LetraMusic${Id}`
             Letra.className = `LetraMusic`
 
-            Promise.all([Vagalume(), VagalumeLetra()]).then((values) => {
-                DadosList.push({
-                    "Autor": values[0],
-                    "Letra": values[1]
-                })
+            // Promise.all([Vagalume(), VagalumeLetra()]).then((values) => {
+            //     DadosList.push({
+            //         "Autor": values[0],
+            //         "Letra": values[1]
+            //     })
 
-                localStorage.setItem("Vagalume", JSON.stringify(DadosList))
-            });
+            //     localStorage.setItem("Vagalume", JSON.stringify(DadosList))
+            // });
 
-            if (localStorage.Vagalume) {
-                var Apis = JSON.parse(localStorage.getItem("Vagalume"))
-                Dados.innerText = Apis[i].Autor
-                Letra.innerText = Apis[i].Letra
-            } else {
-                Dados.innerText = "Desconhecido"
-                Letra.innerText = "Letra Desconhecida"
-            }
+            // if (localStorage.Vagalume) {
+            //     var Apis = JSON.parse(localStorage.getItem("Vagalume"))
+            //     Dados.innerText = Apis[i].Autor
+            //     Letra.innerText = Apis[i].Letra
+            // } else {
+            //     Dados.innerText = "Desconhecido"
+            //     Letra.innerText = "Letra Desconhecida"
+            // }
+
+
+                 // Imagens
+                 Image.id = `Image${Id}`
+                 Image.className = "Image"
+                 fetch("/ThumbJson").then(function (response) {
+                     response.json().then((datas) => {
+                         for (var i = 0; i < datas.Imgs.length; i++) {
+                             var Image = window.document.querySelector(`img#Image${i}`)
+                             var ImagesPrincipal = document.querySelector("img#ImagesPrincipal")
+                             var TPImage = document.querySelector("img#TPImage")
+                             $("label.LabelPlayePause").on("click", function () {
+                                 var Id = parseInt(($(this).attr("id")).replace("Labeis", ""))
+                                 ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
+                                 // Frente
+                                 $(`button#Frente,button#FrenteP`).on("click", function () {
+                                     if (Id < MinhasMusicas.Name_Music.length) {
+                                         Id++
+                                         ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
+                                     } else {
+                                         ImagesPrincipal.src = TPImage.src = datas.Imgs[Id = 0]
+                                     }
+                                 })
+     
+                                 ORIGINAL.addEventListener("ended", function () {
+                                     Id++
+                                     ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
+                                 })
+     
+                                 // Trás
+                                 $(`button#TrásP,buttonTrás`).on("click", function () {
+                                     if (Id >= 0) {
+                                         Id--
+                                         ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
+                                     } else {
+                                         ImagesPrincipal.src = TPImage.src = datas.Imgs[Id = 0]
+                                     }
+                                 })
+                             })
+                         }
+                         Image.src = datas.Imgs[0]
+                     })
+                 })
+     
 
 
             // Caixa de Texto
@@ -132,15 +177,15 @@ fetch("/DadosMusic").then(function (response) {
             IDNum.innerHTML = Id
             IDNum.id = "IDss"
             // Remove
-            Remove.value = "🗑️"
             Remove.type = "submit"
             Remove.classList = i
             Remove.id = MinhasMusicas.Name_Music[i]
             // Edit
-            Edit.value = "✎"
             Edit.type = "submit"
             Edit.classList = i
             Edit.id = MinhasMusicas.Name_Music[i]
+
+            InputDiv.id = "InputDiv"
             // Titulo
             Titulo.innerHTML = MusicReplace
             array.push(MusicReplace)
@@ -157,48 +202,6 @@ fetch("/DadosMusic").then(function (response) {
             LabelPlayePause.setAttribute("for", `PPause${Id}`)
             LabelPlayePause.id = `Labeis${Id}`
             LabelPlayePause.classList = "LabelPlayePause"
-            // Imagens
-            Image.id = `Image${Id}`
-            Image.className = "Image"
-            fetch("/ThumbJson").then(function (response) {
-                response.json().then((datas) => {
-                    for (var i = 0; i < datas.Imgs.length; i++) {
-                        var Image = window.document.querySelector(`img#Image${i}`)
-                        var ImagesPrincipal = document.querySelector("img#ImagesPrincipal")
-                        var TPImage = document.querySelector("img#TPImage")
-                        $("label.LabelPlayePause").on("click", function () {
-                            var Id = parseInt(($(this).attr("id")).replace("Labeis", ""))
-                            ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
-                            // Frente
-                            $(`button#Frente,button#FrenteP`).on("click", function () {
-                                if (Id < MinhasMusicas.Name_Music.length) {
-                                    Id++
-                                    ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
-                                } else {
-                                    ImagesPrincipal.src = TPImage.src = datas.Imgs[Id = 0]
-                                }
-                            })
-
-                            ORIGINAL.addEventListener("ended", function () {
-                                Id++
-                                ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
-                            })
-
-                            // Trás
-                            $(`button#TrásP,buttonTrás`).on("click", function () {
-                                if (Id >= 0) {
-                                    Id--
-                                    ImagesPrincipal.src = TPImage.src = datas.Imgs[Id]
-                                } else {
-                                    ImagesPrincipal.src = TPImage.src = datas.Imgs[Id = 0]
-                                }
-                            })
-                        })
-                        Image.src = datas.Imgs[i]
-                    }
-                })
-            })
-
             // Search
             document.getElementById("Search").addEventListener("keyup", function () {
                 var Filtar = document.getElementById("Search").value
@@ -275,13 +278,11 @@ fetch("/DadosMusic").then(function (response) {
                 var Titulo = document.getElementById(`Titulos${Id}`).innerHTML
                 var Artista = document.getElementById(`Dados${Id}`).innerHTML
                 var Letra = document.getElementById(`LetraMusic${Id}`).innerHTML
-                var Image = document.getElementById(`Image${Id}`).src
                 document.getElementById("MyEdit").style.display = "block"
 
                 MyEdit_NameMusic.value = Titulo
                 MyEdit_Artisc.value = Artista
                 MyEdit_Letra.value = Letra
-                MyEdit_Img.value = Edit_Img.src = Image
 
                 Btn_Edit.classList = Id
                 document.getElementById("Btn_Edit").addEventListener("click", EditPronto)
@@ -297,8 +298,7 @@ fetch("/DadosMusic").then(function (response) {
                     "Id": Id,
                     "Titulo": MyEdit_NameMusic.value,
                     "Artista": MyEdit_Artisc.value,
-                    "Letra": MyEdit_Letra.value,
-                    "Image": MyEdit_Img.value
+                    "Letra": MyEdit_Letra.value
                 })
 
                 localStorage.setItem("Editar", JSON.stringify(EditList))
@@ -312,7 +312,6 @@ fetch("/DadosMusic").then(function (response) {
                         document.querySelectorAll(`#Titulos${Ids}`).forEach(el => el.innerHTML = Edit_Load[j].Titulo)
                         document.querySelectorAll(`#Dados${Ids}`).forEach(el => el.innerHTML = Edit_Load[j].Artista)
                         document.querySelectorAll(`#LetraMusic${Ids}`).forEach(el => el.innerHTML = Edit_Load[j].Letra)
-                        document.querySelectorAll(`#Image${Ids}`).forEach(el => el.src = Edit_Load[j].Image)
                     }
                 }
                 document.addEventListener("load", EditLoad())
@@ -495,8 +494,9 @@ fetch("/DadosMusic").then(function (response) {
                 }
             })
             // Append
-            CaixadeTexto.append(Titulo, Dados, Letra, Remove, Edit)
-            Box.append(IDNum, PlayePause, Image, CaixadeTexto, music)
+            InputDiv.append(Remove, Edit)
+            CaixadeTexto.append(Titulo, Dados, Letra,InputDiv)
+            Box.append(IDNum, PlayePause , Image, CaixadeTexto, music)
             LabelPlayePause.append(Box)
             Musicas.append(LabelPlayePause)
         }

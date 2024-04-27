@@ -1,0 +1,28 @@
+1.Cores em quadrado
+2.A cor principal vai ser Amarelo
+3.As cores são #E35432, #6132E3 , #E3D432, #32E3A5, #732CF5,#8E894F
+
+
+
+Notas Para arrumar bugs:
+Começando pelo HTML:
+
+AdicionarRotas.html
+Config.html
+index.html
+Playlist.html
+
+JavaScript:
+Background.js
+NotasAdd.js
+Playlist.js e script.js ARRUMAR COMPLETAMENTE
+
+Css:
+Falta todos menos o Sidebar
+
+Python:
+main.py Deixar menos bagunçado 
+
+
+Coisas para tira:
+
