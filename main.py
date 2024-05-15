@@ -1,7 +1,7 @@
 #Dependencies
-from flask import Flask,render_template,session,redirect,url_for,jsonify,request,send_from_directory
+from flask import *
 from pytube import YouTube
-import os , glob , json , webview , ctypes , random , urllib.request
+import os , glob , json , webview , ctypes , random , urllib.request , shutil
 from winotify import Notification
 import requests
 # App stuff
@@ -9,19 +9,21 @@ app = Flask(__name__)
 webview.create_window('Reproduction', app,resizable=True,width=1000,height=600 ,http_port=6969,js_api=True,minimized=True,on_top=True)
 #Routers
 Diretorio = r"C:\\Reproduction_Folder\\music"
+Diretorios = "C:/Reproduction_Folder/db.json"
 Galeria = "C:\\Reproduction_Folder\\Imagens"
 
 # Functions
 
-
+# Se não existe ele cria
 existe = os.path.exists("C:\\Reproduction_Folder")
 if(existe == False):
     os.makedirs("C:\\Reproduction_Folder")
-    Arquivo = open('C:/Reproduction_Folder/db.json','x',encoding="utf-8")
     Arquivos = open('C:/Reproduction_Folder/Img.json','x',encoding="utf-8")
+    Arquivo = open('C:/Reproduction_Folder/db.json','x',encoding="utf-8")
 else:
     print("Arquivo Já Criado")
 
+# Adicionar música
 @app.route("/AddMusic",methods=["POST"])
 def AddMusic():
     JsonImg = 'C:/Reproduction_Folder/Img.json'
@@ -44,15 +46,20 @@ def AddMusic():
     os.rename(out_file, new_file)
     file = open(JsonImg)
     x = file.read()
-    New_Dots = f',"{Url_file}"'
-    finaldata = str(json.loads(x)).replace("]}",f'{New_Dots}]').replace("'",'"').replace('[,"','["')
-    with open(JsonImg,"w") as img:
-        img.write(finaldata + "}")
 
-    print(yt.title + " has been successfully downloaded.")
+    if len(x) <= 0:
+        finaldata = '{"Imgs": []}'
+        with open(JsonImg,"w") as img:
+            img.write(str(finaldata).replace("]}",f'"{Url_file}"' + "]}"))
+    else:
+        New_Dots = f',"{Url_file}"'
+        finaldata = str(json.loads(x)).replace("]}",f'{New_Dots}]').replace("'",'"').replace('[,"','["')
+        with open(JsonImg,"w") as img:
+            img.write(finaldata + "}")
+
     return render_template("Adicionar.html")
 
-
+# Adicionar Background
 @app.route('/AddURL', methods=['POST'])
 def AddUrl():
    datas = request.get_json()
@@ -62,6 +69,8 @@ def AddUrl():
    urllib.request.urlretrieve(result, Galeria + "\\" + f"{Random}.png")
    return '',201
 
+
+# Remover as Músicas e Imagens
 @app.route("/RemoveFunc",methods=['POST'])
 def Remover():
     datas = request.get_json()
@@ -89,6 +98,24 @@ def Thumb():
         dados = json.load(my_json)
         return jsonify(dados)
 
+@app.route("/AddFolder",methods=["POST","GET"])
+def AddFolder():
+     datas = request.get_json()
+     result = datas['value']
+     with open(Diretorios,"r",encoding="utf-8") as direct:
+        dados = json.load(direct)
+        PastasBusca = dados["Pastas"]
+        if len(PastasBusca) <= 0:
+            JsonCompleto = f"] , 'Pastas':[{result}]" + "}"
+            PastaFull = str(dados).replace("]}",JsonCompleto).replace("'",'"')
+            with open(Diretorios,"w",encoding="utf-8") as Envia:
+                Envia.write(PastaFull)
+        else:
+            PastaFull = str(dados).replace(str(PastasBusca),result).replace("'",'"')
+            with open(Diretorios,"w",encoding="utf-8") as Envia:
+                Envia.write(PastaFull)
+     return "",201
+
 @app.route("/DadosMusic",methods=["GET","POST"])
 def Music():
     with open("C:/Reproduction_Folder/db.json",encoding="utf-8") as meu_json:
@@ -103,12 +130,28 @@ def home():
 
 @app.route("/Index",methods=["GET","POST"])
 def index():
+    # Files List All
     files = list(filter(os.path.isfile, glob.glob(Diretorio + "\\*"))) 
     files.sort(key=os.path.getctime) 
+
+    # Imagens List All
     Mural = list(filter(os.path.isfile, glob.glob(Galeria + "\\*"))) 
-    Mural.sort(key=os.path.getctime) 
+    Mural.sort(key=os.path.getctime)
+
+    # Folder List all
+    with open(Diretorios,"r",encoding="utf-8") as folders:
+        Objects = json.load(folders)
+        PastasBusca = Objects["Pastas"]
+        for x in PastasBusca:
+            if os.path.isdir(x):
+                folder = list(filter(os.path.isfile, glob.glob(x + "\\*"))) 
+                folder.sort(key=os.path.getctime)
+                for x in folder:
+                    PastaFolders = str(x).replace('\\',"/")
+                    shutil.move(PastaFolders.replace("\\","/"),"C:/Reproduction_Folder/music/")
+        # Combinar
     with open('C:/Reproduction_Folder/db.json','w',encoding="utf-8") as arquivo:
-        Escrito = str('{"Name_Music":' f"{files},'Galeria':{Mural}""}")
+        Escrito = str('{"Name_Music":' f"{files},'Galeria':{Mural},'Pastas':{PastasBusca}""}")
         arquivo.write(Escrito.replace("\\","").replace("C:Reproduction_Foldermusic","").replace("C:Reproduction_FolderImagens","").replace("'",'"'))
     return render_template("index.html")
 

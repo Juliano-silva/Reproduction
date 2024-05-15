@@ -7,22 +7,11 @@
 Notas Para arrumar bugs:
 Começando pelo HTML:
 
-AdicionarRotas.html
-Config.html
-index.html
 Playlist.html
 
 JavaScript:
-Background.js
-NotasAdd.js
-Playlist.js e script.js ARRUMAR COMPLETAMENTE
+Playlist.js ARRUMAR COMPLETAMENTE
 
 Css:
 Falta todos menos o Sidebar
-
-Python:
-main.py Deixar menos bagunçado 
-
-
-Coisas para tira:
 

@@ -8,17 +8,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body id="Corpinho" >
-    <div id="BodyPlaylist"></div>
-    <button id="PlaylistButton" onclick="AbirPlaylist()">Criar uma Playlist</button>
-    <div id="PlaylistInputBody">
-        <input type="text" id="PlaylistName">
-        <button id="PlaylistSalvar" onclick="Salvar()">Adicionar Playlist</button>
-    </div>
+<body id="Corpinho">
     <div id="Musicas">
         <audio id="ORIGINAL"></audio>
     </div>
-    <div id="Templete">
+    <div id="Playlist_Input">
+        <input type="text" id="PlaylistName" placeholder="Nome da Playlist">
+        <input type="text" id="PlaylistImage" placeholder="Image da Playlist">
+        <button onclick="Playlist_Salvar()">Click</button>
+    </div>
+    <div id="Playlist_List"></div>
+
+    <div id="Abrir_Playlist">
+        <button id="FecharPrincipal">✖</button>
+        <img id="Escolha_Image_Playlist" alt="">
+        <h1 id="Escolha_Name_Playlist"></h1>
+        <div id="Escolha_Itens_Playlist"></div>
+    </div>
+
+    <div id="InfoMini">
         <img id="TPImage" alt="">
         <h1 id="TP_Name"></h1>
         <div id="Conteúdo_Templete">
@@ -37,30 +45,13 @@
             <button id="Mais5"><i class="fa fa-forward"></i></button>
             <button id="Randomizando"><i class="fa-solid fa-shuffle"></i></button>
             <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
-            <button id="Frente" onclick="Frente()"><i class="fa-solid fa-arrow-right"></i></button>
+            <button id="Frente"><i class="fa-solid fa-arrow-right"></i></button>
             <button id="NormalVolume"><i class="fa fa-volume-up"></i></button>
             <button id="NormalPlayBack"><i class="fas fa-tachometer-alt"></i></button>
+            <button onclick="Abrir_Player()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
         </div>
         <input type="range" min="0" step="0.1" max="1" id="Volume">
-        <input type="range" id="PlayBack" orient="vertical"   min="0.1" step="0.25" max="10">
-    </div>
-    <div id="MusicaPrincipal">
-        <button id="FecharPrincipal">✖</button>
-        <img id="ImagesPrincipal" alt="">
-        <h1 id="TextosPrincipal"></h1>
-        <h6 id="ArtistaPrincipal"></h6>
-            <div id="Avançar">
-                <button id="TrásP"><img src="../static/Arquivos/Voltar.png" alt=""></button>
-                <img id="Pausar2" src="../static/Arquivos/pause.png" alt="">
-                <img id="play2" src="../static/Arquivos/play.png" alt="">
-                <button id="FrenteP"><img src="../static/Arquivos/Past.png" alt=""></button>
-                </div>
-                <div class="progress_bar" id="progress_bar">
-                    <div class="progressed" id="progressed"></div>
-                </div>
-        <p id="LetraMusics"></p>
-        <h4 id="PlaylistHome"></h4>
-        <h4 id="Remove"></h4>
+        <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
     </div>
 </body>
 <script src="https://unpkg.com/wavesurfer.js"></script>

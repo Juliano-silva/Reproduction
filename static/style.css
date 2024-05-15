@@ -67,10 +67,6 @@ body::-webkit-scrollbar {
   width: 0px;
 }
 
-#Sidebar,#MyEdit,#Templete,#MusicaPrincipal{
-  display: none;
-}
-
 /* Sidebar */
 #Sidebar {
   color: white;
@@ -148,8 +144,7 @@ body::-webkit-scrollbar {
 
 #HeaderSidebar>h1,
 #Corpo_Backgrounds>h1,
-#Caixa_de_Sobre>h2,
-#Playlist_List > h1 {
+#Caixa_de_Sobre>h2 {
   color: #FFF;
   font-family: 'Holtwood One SC', serif;
   font-size: 4vh;
@@ -222,12 +217,16 @@ text-decoration: none;
   display: block;
   padding: 1vh;
   margin: auto;
+  color: white;
+  font-size: xx-large;
+  text-align: center;
+  height:4.2vh;
 }
 
 #Search::placeholder{
   color: var(--color3);
   text-align: center;
-  font-size: 2.8vh;
+  font-size: 3vh;
 }
 
 #Musicas{
@@ -273,6 +272,13 @@ text-decoration: none;
 }
 
 
+#CaixaTexto > h1{
+  font-size: 3.5vh;
+}
+
+#CaixaTexto > h2{
+  font-size: 2vh;
+}
 
 #CaixaTexto > h2{
   color: #732CF5;
@@ -311,6 +317,8 @@ text-decoration: none;
   height: 5vh;
 }
 
+/* MusicaPrincipal */
+
 #MusicaPrincipal{
   background-color: var(--black-theme);
   position: fixed;
@@ -324,6 +332,8 @@ text-decoration: none;
   width: 0px;
 }
 
+
+
 /* Adicionar e Background */
 #Adicionar,#Background_Bk{
   all: unset;
@@ -334,6 +344,88 @@ text-decoration: none;
   height: 20vh;
   width: 80%;
 }
+
+#FecharPrincipal{
+  all: unset;
+  position: absolute;
+  top: 0;
+  font-size: 8vh;
+  margin-left: 2vh;
+}
+
+#ImagesPrincipal{
+  width: 100%;
+  height: 80vh;
+}
+
+
+#Avançar {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 75%;
+  margin: auto;
+  padding: 2vh;
+}
+
+#FrenteP,
+#TrásP {
+  all: unset;
+  cursor: pointer;
+  z-index: 1;
+  top: 0;
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh white);
+}
+
+#TrásP>img,
+#FrenteP>img {
+  width: 35vh;
+  height: 35vh;
+}
+
+#play2,
+#Pausar2 {
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh white);
+  display: flex;
+  width: 35vh;
+}
+
+/* Audio */
+.progress_bar {
+  height: 2.6vh;
+  width: 80%;
+  display: block;
+  margin: auto;
+  border-radius: 1vh;
+  overflow: hidden;
+  background-color: #151515;
+}
+
+.progressed {
+  height: 2.6vh;
+  background: url("https://i.pinimg.com/originals/64/db/fb/64dbfb279110e5730b698a752532605b.gif") fixed no-repeat center;
+  background-size: cover;
+  width: 50%;
+  transition: all 0.1ms;
+  position: relative;
+}
+
+#Box_progress{
+  margin-top: 4vh;
+}
+
+.progressed::after {
+  content: '';
+  position: absolute;
+  right: -1vh;
+  top: -0vh;
+  width: 2.6vh;
+  height: 2.6vh;
+  border-radius: 50%;
+  background-color: rgb(25, 6, 112);
+}
+
+
 
 #AdicionarInput,#BackgroundsText{
   all: unset;
@@ -378,23 +470,47 @@ text-decoration: none;
 
 /* Background */
 
-#BackgroundsC{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  width: 100%;
-  overflow: auto;
-  height: 80vh;
+#BackgroundsC {
+	max-width: 100%;
+	margin: 0 auto;
+	column-count: 3; 
 }
 
-#BackgroundsC::-webkit-scrollbar{
-  width: 0px;
+#BackgroundsC > div > img {
+	display: block;
+	max-width: 100%;
 }
 
-#BackgroundsC > img{
-  width: 30%;
-  cursor: pointer;
-  height: 30vh;
-  margin-left: 2vh;
+#BackgroundsC > div {
   margin-top: 2vh;
+	break-inside: avoid-column;
+	overflow: hidden;
+}
+
+
+/* Esconder */
+#Sidebar,#MyEdit,#InfoMini,#MusicaPrincipal,#play2{
+  display: none;
+}
+
+/* Playlist */
+#Escolha_ITEM{
+  border: 0.2vh solid white;
+  cursor: pointer;
+}
+
+#Abrir_Playlist{
+  display: none;
+  background-color: #151515;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  overflow: auto;
+  top: 0;
+}
+
+#InfoMini{
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
 }
