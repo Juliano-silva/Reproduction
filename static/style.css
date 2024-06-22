@@ -1,0 +1,897 @@
+@import url('https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap');
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./Arquivos/Fonts/Gilroy-Light.otf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color1: #E35432;
+  --color2: #6132E3;
+  --color3: #E3D432;
+  --color4: #32E3A5;
+  --color5: #732CF5;
+  --color6: #8E894F;
+  --color7: #252525;
+  --color8: #1c0325;
+
+  --white-theme: #e6e6e6;
+  --black-theme: rgba(0, 0, 0, 0.79);
+
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Style Padrão */
+input[type="checkbox"] {
+  display: none;
+}
+
+#BodyBody {
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  -webkit-backdrop-filter: blur(8vh);
+  color: white;
+}
+
+
+body::before {
+  content: '';
+  background-color: var(--black-theme);
+  top: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
+}
+
+iframe {
+  width: 100%;
+  height: 100vh;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Sidebar */
+#Sidebar {
+  color: white;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  text-decoration: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60vh;
+  height: 100%;
+  text-align: center;
+  transform: translate(60vh);
+  transition: 1s;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#TempoDiv {
+  color: #FFF;
+  text-align: center;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 1.4vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 90%;
+  display: block;
+  margin: auto;
+  margin-top: 4.5vh;
+}
+
+:is(#QuantideDiv, #TempoDiv)>h1>span {
+  display: block;
+  color: yellow;
+  text-shadow: 0.2vh 0.2vh 0.2vh black;
+}
+
+#QuantideDiv {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  column-count: 2;
+  margin-left: -2vh;
+  break-inside: avoid-column;
+}
+
+#QuantideDiv>h1 {
+  border: 0.7vh solid rgb(106, 21, 218);
+  color: #FFF;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  text-align: center;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 3vh;
+  font-style: normal;
+  padding: 2vh;
+  height: 10vh;
+  font-weight: 400;
+  line-height: normal;
+  width: 80vh;
+  margin-left: 2vh;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+#QuantideDiv>h1:hover {
+  color: black;
+  text-shadow: 0.2vh 0.2vh 0.2vh white;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  cursor: default;
+  background-image: url("https://i.pinimg.com/originals/64/db/fb/64dbfb279110e5730b698a752532605b.gif");
+}
+
+#QuantideDiv>h1::-webkit-scrollbar {
+  width: 0px;
+}
+
+#Sidebar>a {
+  display: block;
+  margin-top: 2vh;
+  text-decoration: none;
+  text-align: left;
+  margin-left: 2vh;
+  color: #FFF;
+  flex-shrink: 0;
+  font-family: 'Holtwood One SC', serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-shadow: 0.1vh 0.1vh 0.1vh black;
+  font-size: 2vh;
+}
+
+#Sidebar>a:hover {
+  text-shadow: none;
+  color: #FFF;
+  font-family: 'Holtwood One SC', serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(180deg, #FAFF00 0%, #8EE2F4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 4vh;
+}
+
+#Add_Pasta_body> :is(input, button) {
+  margin-top: 3vh;
+}
+
+#HeaderSidebar {
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+#HeaderSidebar>h1,
+#Corpo_Backgrounds>h1,
+#Caixa_de_Sobre>h2,
+#Caixa_de_Sobre>h6 {
+  color: #FFF;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 4vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(180deg, #FAFF00 0%, #8EE2F4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#Caixa_de_Sobre>h2,
+#Caixa_de_Sobre>h6 {
+  text-align: center;
+  font-size: 6vh;
+  margin-top: 3vh;
+  padding: 2vh;
+}
+
+#Caixa_de_Sobre>h6 {
+  font-size: 2vh;
+  margin-top: 10vh;
+}
+
+#Corpo_Backgrounds>h1 {
+  display: block;
+  margin: auto;
+  font-size: 7vh;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  text-align: center;
+}
+
+#BtnOpen {
+  all: unset;
+  right: 0;
+  position: fixed;
+  color: white;
+  cursor: pointer;
+  z-index: 3;
+  font-size: 10vh;
+  margin-top: -2vh;
+  margin-right: 1vh;
+}
+
+#Border>div {
+  border: 0.3vh solid;
+  border-image: conic-gradient(from var(--angle), rgb(201, 201, 61), yellow, rgb(192, 192, 34), rgb(255, 255, 48)) 1;
+  display: block;
+  margin: auto;
+  margin-top: 1vh;
+  font-size: 2.5vh;
+  width: 80%;
+  color: #ffff00;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#EscolherBK>a {
+  text-decoration: none;
+  color: yellow;
+}
+
+/* List Música */
+
+#QuebraLinha {
+  display: block;
+  padding-top: 2vh;
+}
+
+#Search::-webkit-scrollbar {
+  width: 0px;
+}
+
+#Search {
+  resize: none;
+  background-color: #1c162e;
+  border: 0.4vh solid #6132E3;
+  border-radius: 1vh;
+  width: 80%;
+  display: block;
+  padding: 1vh;
+  margin: auto;
+  color: yellow;
+  font-size: xx-large;
+  text-align: center;
+  height: 4.2vh;
+}
+
+#Search::placeholder {
+  color: yellow;
+  text-align: center;
+  font-size: 3vh;
+}
+
+#Musicas {
+  margin-top: 2vh;
+}
+
+#Musicas>label {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#Musicas>label>div {
+  display: flex;
+}
+
+#Boxs {
+  display: flex;
+  align-items: center;
+  height: 20vh;
+}
+
+#Boxs>img {
+  width: 13vh;
+  height: 13vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1vh;
+}
+
+#IDss {
+  width: 10vh;
+  font-size: 6vh;
+  text-align: center;
+}
+
+#CaixaTexto {
+  margin-left: 2vh;
+  font-size: 3vh;
+}
+
+
+#CaixaTexto>h1 {
+  color: whitesmoke;
+  text-shadow: 0.1vh 0.1vh 0.1vh #6132E3;
+  font-size: 4vh;
+}
+
+#CaixaTexto>h2 {
+  font-size: 2vh;
+}
+
+#CaixaTexto>h2 {
+  color: #732CF5;
+}
+
+#CaixaTexto>h3 {
+  display: none;
+}
+
+#InputDiv {
+  position: absolute;
+  margin-top: -15vh;
+  height: 20vh;
+  right: 0;
+  margin-right: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#InputDiv>button {
+  all: unset;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 7vh;
+  height: 7vh;
+  cursor: pointer;
+}
+
+#Abrir_Escolha{
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 40vh;
+  bottom: 0;
+  background-color: #252525;
+}
+
+#InputDiv > button:nth-child(2){
+  background-image: url("./Arquivos/Icons_Config/Edit.png");
+}
+#InputDiv > button:nth-child(1){
+  background-image: url("./Arquivos/Icons_Config/Thash.png");
+}
+
+/* MusicaPrincipal */
+
+#MusicaPrincipal {
+  background-color: var(--black-theme);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  overflow: auto;
+}
+
+#MusicaPrincipal::-webkit-scrollbar {
+  width: 0px;
+}
+
+#MyEdit {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #151515;
+  display: none;
+}
+
+#MyEdit > :is(input,textarea){
+  all: unset;
+    display: block;
+    margin: auto;
+    margin-top: 2vh;
+    padding: 2vh;
+    padding-bottom: 1vh;
+    text-align: center;
+    width: 70vh;
+    background-color: #1c162e;
+    color: yellow;
+    border-bottom: 0.3vh solid #6132E3;
+}
+
+#MyEdit > textarea{
+  height: 40vh;
+}
+
+#MyEdit > button{
+  all: unset;
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+  padding: 1vh;
+  width: 20vh;
+  font-size: 2vh;
+  text-align: center;
+  font-weight: bold;
+  color: yellow;
+  border: 0.3vh solid #7847ff;
+  background-color: #1c162e;
+}
+
+/* Adicionar e Background */
+#Adicionar,
+#Background_Bk {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 20vh;
+  width: 80%;
+}
+
+#FecharPrincipal {
+  all: unset;
+  position: absolute;
+  top: 0;
+  font-size: 8vh;
+  margin-left: 2vh;
+}
+
+#ImagesPrincipal {
+  width: 50%;
+  height: 85%;
+  border-radius: 3vh;
+  display: block;
+  margin: auto;
+  margin-top: 4vh;
+}
+
+#TextosPrincipal {
+  text-align: center;
+  font-size: 6vh;
+  margin-top: 2vh;
+  color: #EAF0FF;
+  font-family: "Gilroy";
+}
+
+#ArtistaPrincipal {
+  text-align: center;
+  font-size: 3vh;
+  margin-top: 1vh;
+  color: #A5C0FF;
+  font-family: "Gilroy";
+}
+
+#Avançar {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 75%;
+  margin: auto;
+  padding: 2vh;
+}
+
+#FrenteP,
+#TrásP {
+  all: unset;
+  cursor: pointer;
+  z-index: 1;
+  top: 0;
+}
+
+#TrásP>img,
+#FrenteP>img {
+  width: 35vh;
+  height: 35vh;
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh wheat);
+}
+
+#Container_Btn>button {
+  all: unset;
+  position: absolute;
+  margin-top: -50vh;
+  margin-left: -22vh;
+  width: 35vh;
+  cursor: pointer;
+  height: 35vh;
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh wheat);
+}
+
+#play2,
+#Pausar2 {
+  display: flex;
+  width: 35vh;
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh wheat);
+}
+
+/* Audio */
+.progress_bar {
+  height: 2.8vh;
+  width: 80%;
+  display: block;
+  margin: auto;
+  border-radius: 1vh;
+  overflow: hidden;
+  background-color: #272626;
+}
+
+.progressed {
+  height: 2.6vh;
+  background-color: #177967;
+  background-size: cover;
+  width: 50%;
+  transition: all 0.1ms;
+  position: relative;
+}
+
+#Box_progress {
+  margin-top: 4vh;
+}
+
+.progressed::after {
+  content: '';
+  position: absolute;
+  right: -1vh;
+  top: -0vh;
+  width: 2.6vh;
+  height: 2.6vh;
+  border-radius: 50%;
+  background-color: #45e9cb;
+}
+
+#LetraMusics {
+  font-size: 3vh;
+  text-align: justify;
+  width: 60%;
+  display: block;
+  line-height: 5vh;
+  margin: auto;
+  color: whitesmoke;
+  text-shadow: 0.1vh 0.1vh 0.1vh #6132E3;
+  padding: 2vh;
+}
+
+#PlaylistHome>h1 {
+  color: yellow;
+  padding: 2vh;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Girloy";
+}
+
+#Conteudo {
+  text-align: center;
+  padding: 2vh;
+}
+
+#AdicionarInput,
+#BackgroundsText,
+#Playlist_Input>input,
+#Add_Pasta {
+  all: unset;
+  display: block;
+  margin: auto;
+  padding: 2vh;
+  padding-bottom: 1vh;
+  text-align: center;
+  width: 70vh;
+  background-color: #1c162e;
+  color: yellow;
+  font-size: 2vh;
+  border-bottom: 0.3vh solid #6132E3;
+}
+
+#Playlist_Input>input {
+  margin-top: 2vh;
+}
+
+#AdicionarButton,
+#Background_Bk>button,
+#Playlist_Input>button,
+#Btn_Add_Pasta,
+#Escolha_Itens_Playlist > button,
+#Conteudo>button {
+  all: unset;
+  display: block;
+  margin: auto;
+  margin-top: 1vh;
+  padding: 1vh;
+  width: 20vh;
+  font-size: 2vh;
+  text-align: center;
+  font-weight: bold;
+  color: yellow;
+  border: 0.3vh solid #7847ff;
+  cursor: pointer;
+  background-color: #1c162e;
+}
+
+#Conteudo>button {
+  display: inline-block;
+}
+
+:is(#BackgroundsText, #AdicionarInput, #Add_Pasta)::placeholder,
+#Playlist_Input>input::placeholder {
+  color: var(--color3);
+}
+
+#FileLabel {
+  position: absolute;
+  bottom: 0;
+  background-color: #1c162e;
+  color: var(--color3);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 2vh;
+}
+
+/* Background */
+
+#BackgroundsC {
+  max-width: 100%;
+  margin: 0 auto;
+  column-count: 3;
+}
+
+#BackgroundsC>div>img {
+  display: block;
+  max-width: 100%;
+}
+
+#BackgroundsC>div {
+  margin-top: 2vh;
+  break-inside: avoid-column;
+  overflow: hidden;
+}
+
+
+/* Esconder */
+#Sidebar,
+#InfoMini,
+#MusicaPrincipal,
+#play2 {
+  display: none;
+}
+
+/* Templete */
+#InfoMini {
+  height: 20vh;
+  width: 100%;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  bottom: 0;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: none;
+}
+
+#TPImage {
+  width: 25vh;
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+#TP_Name {
+  position: absolute;
+  margin-left: 25vh;
+  font-size: 4vh;
+  height: 5vh;
+  padding: 2vh;
+  overflow: auto;
+}
+
+#TP_Name::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Escolha_ITEM {
+  border: 0.2vh solid white;
+  cursor: pointer;
+}
+
+#Painel_Templete {
+  position: absolute;
+  padding: 2vh;
+  margin-left: 26vh;
+  margin-bottom: 5vh;
+  bottom: 0;
+}
+
+#Painel_Templete>button {
+  all: unset;
+}
+
+#Painel_Templete>label>i,
+#Painel_Templete>button {
+  font-size: 4vh;
+  cursor: pointer;
+  margin-left: 0.5vh;
+}
+
+#Volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60vh;
+  height: 3vh;
+  background: rgb(24, 22, 37);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  display: flex;
+  margin: auto;
+  border: 0.5vh solid;
+  --angle: 0deg;
+  border-image: conic-gradient(from var(--angle), red, rgb(190, 7, 7), yellow, aqua, purple, yellow, orange) 1;
+  animation: 5s rotate linear infinite;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  margin-left: 35vh;
+  margin-bottom: 2vh;
+}
+
+#Volume:hover,
+#PlayBack:hover {
+  opacity: 1;
+}
+
+#Volume::-webkit-slider-thumb,
+#PlayBack::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.8vh;
+  height: 1.8vh;
+  background: rgb(2, 43, 2);
+  border: 0.4vh solid green;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#PlayBack::-webkit-slider-thumb {
+  width: 3.5vh;
+  height: 3.5vh;
+}
+
+#PlayBack {
+  transform: rotate(270deg);
+  appearance: none;
+  background: rgb(24, 22, 37);
+  outline: none;
+  opacity: 0.7;
+  height: 5vh;
+  width: 13vh;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border: 0.5vh solid;
+  --angle: 0deg;
+  border-image: conic-gradient(from var(--angle), red, rgb(190, 7, 7), yellow, aqua, purple, yellow, orange) 1;
+  animation: 5s rotate linear infinite;
+  overflow: hidden;
+  display: flex;
+  float: right;
+  margin-top: 7vh;
+  margin-right: 3vh;
+}
+
+/* Playlist */
+
+#Abrir_Playlist {
+  display: none;
+  background-color: #151515;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  overflow: auto;
+  top: 0;
+}
+
+#Abrir_Playlist::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Playlist_List {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+#Playlist_List>div {
+  width: 50vh;
+  padding: 2vh;
+  height: 50vh;
+  overflow: auto;
+  background-color: #1c162e;
+  margin-left: 2vh;
+  cursor: pointer;
+}
+
+#Playlist_List>div::-webkit-scrollbar {
+  width: 0px;
+}
+
+#Playlist_List>div>h1 {
+  color: #6132E3;
+  text-shadow: 0.1vh 0.1vh 0.1vh #1c162e;
+  text-align: center;
+  padding: 2vh;
+  font-size: 4vh;
+}
+
+#Playlist_List>div>img {
+  display: block;
+  margin: auto;
+  width: 100%;
+  height: 80%;
+}
+
+#Escolha_Image_Playlist {
+  display: block;
+  margin: auto;
+  width: 80vh;
+  height: 80vh;
+  margin-top: 3vh;
+  border: 0.2vh solid #6132E3;
+
+}
+
+#Escolha_Name_Playlist {
+  text-align: center;
+  font-size: 6vh;
+  margin-top: 2vh;
+  color: #EAF0FF;
+  font-family: "Gilroy";
+}
+
+#Escolha_Itens_Playlist > p{
+  padding: 2vh;
+  color: white;
+  font-size: 2vh;
+  text-align: center;
+  margin-top: 1vh;
+}

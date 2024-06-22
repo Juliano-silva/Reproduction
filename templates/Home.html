@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduction APP</title>
+    <link rel="shortcut icon" href="../static/Arquivos/Icon.png"
+        type="image/x-icon">
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css
+    " rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+</head>
+
+<body id="BodyBody">
+    <input type="checkbox" id="BtnSidebarCheck">
+    <label for="BtnSidebarCheck">
+        <h1 id="BtnOpen">☰</h1>
+    </label>
+    <div id="Sidebar">
+        <div id="HeaderSidebar">
+            <h1>Reproduction</h1>
+        </div>
+        <div id="TempoDiv">
+            <h1>Tempo Atual: <span id="Tempo"></span></h1>
+        </div>
+        <a href="/Index" target="Rota_Principal"><i class="fa-solid fa-file-audio"></i> Player</a>
+        <a href="/Adicionar" target="Rota_Principal"><i class="fa-solid fa-plus"></i> Adicionar</a>
+        <a href="/Background" target="Rota_Principal"><i class="fa-solid fa-image"></i> Adicionar Background</a>
+        <a href="/Playlist" target="Rota_Principal"><i class="fa-solid fa-circle-play"></i> Playlist</a>
+        <a href="/Config" target="Rota_Principal"><i class="fa-solid fa-address-card"></i> Configuração</a>
+        <div id="Border">
+            <div id="EscolherBK"><a href="/BackgroundEscolha" target="Rota_Principal">Escolher um Background</a></div>
+        </div>
+    </div>
+    <div>
+    </div>
+    </section>
+        <iframe src="/Index" name="Rota_Principal" frameborder="0"></iframe>
+</body>
+<script src="../static/Sidebar.js"></script>
+<script src="../static/Background.js"></script>
+</html>

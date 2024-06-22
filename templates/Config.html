@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Config</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body id="Sobre">
+    <div id="Caixa_de_Sobre">
+      <h2>Reproduction Configurações</h2>
+      <div id="QuantideDiv">
+        <h1>Músicas Tocadas: <span id="Quantidade"></span></h1>
+        <h1>Quantidade de Músicas: <span id="QuantidadeMusic"></span></h1>
+        <h1 id="ButtonRemove">Remover Todas as APIs</h1>
+        <h1 onclick="Abrir()">Pastas Importar</h1>
+      </div>
+      <div id="Add_Pasta_body" style="display: none">
+        <input type="text" id="Add_Pasta" placeholder="Insira o caminho de Sua Pasta de Música"/>
+        <button id="Btn_Add_Pasta" onclick="Add_Pasta()">Adicionar</button>
+      </div>
+      <h6>@2023 by JSA PRoduction</h6>
+    </div>
+  </body>
+  <script src="../static/Config.js"></script>
+</html>
