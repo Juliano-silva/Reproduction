@@ -15,3 +15,13 @@ function Baixar() {
         document.getElementById('AdicionarInput').value = ""
     }
 }
+
+function Baixar_Playlist(){
+    var value = document.getElementById('AdicionarPlaylistInput').value;
+        $.ajax({
+            url: '/AddPlaylistMusic',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ 'value': document.getElementById('AdicionarPlaylistInput').value })
+        });
+}

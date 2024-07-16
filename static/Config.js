@@ -23,7 +23,13 @@ fetch("/DadosMusic").then(function (response) {
 document.getElementById("ButtonRemove").addEventListener("click",function(){
     localStorage.clear()
     location.reload()
+    $.ajax({
+        url:"/Delete_All_Btn",
+        type:"POST",
+        contentType: "application/json",
+    })
 })
+
 
 function Abrir(){
     document.getElementById("Add_Pasta_body").style.display = "block"

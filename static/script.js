@@ -451,31 +451,31 @@ document.getElementById("Btn_Edit").addEventListener("click", function () {
 })
 
 
-fetch("/PlaylistSearch").then(function (response) {
-  response.json().then((data) => {
-    for (var i = 0; i <= data.length; i++) {
-      var Titulo = document.createElement("h1")
-      Titulo.innerText = Titulo.id = data[i].titulo
-      Titulo.addEventListener("click", function () {
-        var Id = document.getElementById("PlaylistHome").className
-        var Buscar = this.id
-        fetch("/DadosMusic").then(function (response) {
-          response.json().then((data) => {
-            var Id_Replace = String(Id).replace("PPause", "")
-            console.log(Buscar);
-            $.ajax({
-              url: '/PlaylistItem',
-              type: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({ 'value': data[Id_Replace].titulo, "Id": Buscar })
-            });
-          })
-        })
-      })
-      document.getElementById("PlaylistHome").append(Titulo)
-    }
-  })
-})
+// fetch("/PlaylistSearch").then(function (response) {
+//   response.json().then((data) => {
+//     for (var i = 0; i <= data.length; i++) {
+//       var Titulo = document.createElement("h1")
+//       Titulo.innerText = Titulo.id = data[i].titulo
+//       Titulo.addEventListener("click", function () {
+//         var Id = document.getElementById("PlaylistHome").className
+//         var Buscar = this.id
+//         fetch("/DadosMusic").then(function (response) {
+//           response.json().then((data) => {
+//             var Id_Replace = String(Id).replace("PPause", "")
+//             console.log(Buscar);
+//             $.ajax({
+//               url: '/PlaylistItem',
+//               type: 'POST',
+//               contentType: 'application/json',
+//               data: JSON.stringify({ 'value': data[Id_Replace].titulo, "Id": Buscar })
+//             });
+//           })
+//         })
+//       })
+//       document.getElementById("PlaylistHome").append(Titulo)
+//     }
+//   })
+// })
 
 // Background
 if (localStorage.BackgroundEscolhido) {
