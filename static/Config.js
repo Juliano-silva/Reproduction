@@ -10,9 +10,9 @@ function Add_Pasta(){
 
 var Tocandas = localStorage.getItem("Tocandas")
 if (Tocandas < 0){
-    Quantidade.innerHTML = Tocandas + " Vezes"
+    Quantidade.innerHTML = Tocandas + "Vezes"
 }else{
-    Quantidade.innerHTML = " 0 Vezes"
+    Quantidade.innerHTML = "0 Vezes"
 }
 fetch("/DadosMusic").then(function (response) {
     response.json().then((data) => {
@@ -32,5 +32,11 @@ document.getElementById("ButtonRemove").addEventListener("click",function(){
 
 
 function Abrir(){
-    document.getElementById("Add_Pasta_body").style.display = "block"
+    var VerificarBtn = document.getElementById("Add_Pasta_body")
+    var Verificar_Display = window.getComputedStyle(VerificarBtn).getPropertyValue("display")
+    if(Verificar_Display == "none"){
+        document.getElementById("Add_Pasta_body").style.display = "block"
+    }else{
+        document.getElementById("Add_Pasta_body").style.display = "none"
+    }
 }

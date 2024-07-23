@@ -14,7 +14,7 @@
     <!-- Player -->
     <div id="QuebraLinha"></div>
     <div id="Search_DIV">
-        <textarea id="Search" placeholder="Procurar Minhas Músicas"></textarea>
+        <textarea id="Search" placeholder="Procurar por minhas Músicas"></textarea>
     </div>
     <div id="Musicas">
         <audio id="ORIGINAL"></audio>
@@ -23,46 +23,64 @@
     <!-- Edit -->
     <div id="MyEdit">
         <img id="Edit_Img">
-        <input type="text" id="MyEdit_NameMusic" placeholder="Editar o nome da música">
-        <input type="text" id="MyEdit_Artisc" placeholder="Editar o artista da música">
-        <textarea id="MyEdit_Letra" placeholder="Editar a Letra da música"></textarea>
-        <input type="text" id="MyEdit_Img" placeholder="Editar a Image da música">
+        <label>Titulo: <input type="text" id="MyEdit_NameMusic" placeholder="Editar o nome da música"></label>
+        <label>Autor: <input type="text" id="MyEdit_Artisc" placeholder="Editar o artista da música"></label>
+        <label>Letra: <textarea id="MyEdit_Letra" placeholder="Editar a Letra da música"></textarea></label>
+        <label>Imagem: <input type="text" id="MyEdit_Img" placeholder="Editar a Image da música"></label>
         <button id="Btn_Edit">Salvar</button>
     </div>
+
+    <!-- Configuração Sidebar -->
+     <div id="Sidebar_Config">
+        <div id="Sidebar_Escolha">
+        </div>
+        <div id="Add_Config"></div>
+     </div>
 
     <!-- Music Mini -->
     <div id="InfoMini">
         <img id="TPImage" alt="">
         <h1 id="TP_Name"></h1>
+        <h2 id="TP_Artista"></h2>
         <div id="Painel_Templete">
-            <input type="checkbox" id="PPEvent">
-            <label for="PPEvent">
-                <i id="BtnPauseEvent" class="fas fa-pause"></i>
-                <i style="display: none;" id="BtnPlayEvent" class="fas fa-play"></i>
-            </label>
-            <input type="checkbox" id="MuteeDismute">
-            <label id="LabelControl" for="MuteeDismute">
-                <i id="BtnMute" class="fas fa-volume-mute"></i>
-                <i style="display: none;" id="BtnVolume" class="fas fa-volume-down"></i>
-            </label>
-            <button id="Menos5"><i class="fa fa-backward"></i></button>
-            <button id="Recomeçar"><i class="fa fa-stop	"></i></button>
-            <button id="Mais5"><i class="fa fa-forward"></i></button>
-            <button id="Randomizando"><i class="fa-solid fa-shuffle"></i></button>
-            <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
-            <button id="Frente" onclick="Frente()"><i class="fa-solid fa-arrow-right"></i></button>
-            <button id="NormalVolume"><i class="fa fa-volume-up"></i></button>
-            <button id="NormalPlayBack"><i class="fas fa-tachometer-alt"></i></button>
-            <button onclick="Abrir_Player()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <div id="TP_Box_progress">
+                <div class="TP_progress_bar" id="progress_bar2">
+                    <div class="TP_progressed" id="progressed2"></div>
+                </div>
+                </div>
+                <div id="TP_Principal_Template">
+                    <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="Menos5()"><i class="fa fa-backward"></i></button>
+                    <input type="checkbox" id="PPEvent">
+                    <label for="PPEvent" >
+                        <i id="BtnPauseEvent" class="fas fa-pause"></i>
+                        <i style="display: none;" id="BtnPlayEvent" class="fas fa-play"></i>
+                    </label>
+                    <button onclick="Mais5()"><i class="fa fa-forward"></i></button>
+                    <button id="Frente"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div id="TP_Outro_Lado">
+                <input type="checkbox" id="MuteeDismute">
+                <label id="LabelControl" for="MuteeDismute">
+                    <i id="BtnMute" class="fas fa-volume-mute"></i>
+                    <i style="display: none;" id="BtnVolume" class="fas fa-volume-down"></i>
+                </label>
+                <button onclick="Recomeçar()"><i class="fa fa-stop	"></i></button>
+                <button id="Randomizar"><i class="fa-solid fa-shuffle"></i></button>
+                <button onclick="Normal_Volume()"><i class="fa fa-volume-up"></i></button>
+                <button onclick="Normal_Velocidade()"><i class="fas fa-tachometer-alt"></i></button>
+                <button onclick="Abrir_Player()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            </div>
+            <input type="range" min="0" step="0.1" max="1" id="Volume">
+            <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
         </div>
-        <input type="range" min="0" step="0.1" max="1" id="Volume">
-        <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
     </div>
 
     <!-- Player On -->
     <div id="MusicaPrincipal">
         <button id="FecharPrincipal">✖</button>
-        <img id="ImagesPrincipal">
+        <div id="ImagesPrincipal"></div>
         <div id="ArtistLetras">
             <h1 id="TextosPrincipal"></h1>
             <h6 id="ArtistaPrincipal"></h6>
@@ -72,25 +90,22 @@
                 <div class="progressed" id="progressed"></div>
             </div>
         </div>
+        <div id="Escolhas_Button_Estilo">
+            <img src="../static/Arquivos/Icons_Player/Normal.png" id="Normal" alt="">
+            <img src="../static/Arquivos/Icons_Player/Recomeçar.png" id="Recomecar" style="display: none;" alt="">
+            <img src="../static/Arquivos/Icons_Player/Random.png" id="Random" style="display: none;" alt="">
+        </div>
         <div id="Avançar">
-            <div id="Container_Btn">
-                <button id="NormalBtn"><img src="../static/Arquivos/Icons_Player/Normal.png" alt=""></button>
-                <button id="RandomBtn" style="display: none;"><img src="../static/Arquivos/Icons_Player/Random.png" alt=""></button>
-                <button id="RecomecarBtn" style="display: none;"><img src="../static/Arquivos/Icons_Player/Recomeçar.png" alt=""></button>
-            </div>
-            <button id="TrásP"><img src="../static/Arquivos/Icons_Player/Voltar.png" alt=""></button>
+            <button id="TrásP"><img src="../static/Arquivos/Icons_Player/previous.png" alt=""></button>
                 <img id="Pausar2" src="../static/Arquivos/Icons_Player/pause.png" alt="">
                 <img id="play2" src="../static/Arquivos/Icons_Player/play.png" alt="">
-            <button id="FrenteP"><img src="../static/Arquivos/Icons_Player/Past.png" alt=""></button>
+            <button id="FrenteP"><img src="../static/Arquivos/Icons_Player/next.png" alt=""></button>
         </div>
-        <div id="Conteudo">
-            <button onclick="Click_Playlist()">Adicionar Playlist</button>
-            <button onclick="Click_Letra()">Letra de Música</button>
-            <div style="display: none;" id="PlaylistHome"></div>
-            <p id="LetraMusics"></p>
-        </div>
+        <button id="Playlist_Btn">Adicionar a uma Playlist</button>
+        <button id="Letra_Btn" >Letra de música</button>
+        <div id="Conteudo_Playlist"></div>
+        <div id="Conteudo_Letra_Musica"></div>
     </div>
-
 </body>
 
 <script src="https://unpkg.com/wavesurfer.js"></script>

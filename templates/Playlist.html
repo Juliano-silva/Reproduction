@@ -13,45 +13,62 @@
         <audio id="ORIGINAL" autoplay></audio>
     </div>
     <div id="Playlist_Input">
+        <button id="FecharPrincipal_Btn">✖</button>
         <input type="text" id="PlaylistName" placeholder="Nome da Playlist">
         <input type="text" id="PlaylistImage" placeholder="Image da Playlist">
-        <button onclick="Playlist_Salvar()">Click</button>
+        <button id="Add_Playlist_Btn" onclick="Playlist_Salvar()">Adicionar uma Playlist</button>
     </div>
     <div id="Playlist_List"></div>
-
     <div id="Abrir_Playlist">
-        <button id="FecharPrincipal">✖</button>
-        <img id="Escolha_Image_Playlist">
-        <h1 id="Escolha_Name_Playlist"></h1>
+        <button id="FecharPrincipal" >✖</button>
+        <div id="Escolha_Div">
+            <img id="Escolha_Image_Playlist">
+            <div id="Caixa_Escolha_Div">
+                <h1 id="Escolha_Playlist_Num"></h1>
+                <h3 id="Escolha_Name_Playlist"></h3>
+                <h6 id="Escolha_Informações"></h6>
+            </div>
+            <div id="Playlist_Escolhas"></div>
+        </div>
         <div id="Escolha_Itens_Playlist"></div>
     </div>
-
     <div id="InfoMini">
         <img id="TPImage" alt="">
         <h1 id="TP_Name"></h1>
+        <h2 id="TP_Artista"></h2>
         <div id="Painel_Templete">
-            <input type="checkbox" id="PPEvent">
-            <label for="PPEvent">
-                <i id="BtnPauseEvent" class="fas fa-pause"></i>
-                <i style="display: none;" id="BtnPlayEvent" class="fas fa-play"></i>
-            </label>
-            <input type="checkbox" id="MuteeDismute">
-            <label id="LabelControl" for="MuteeDismute">
-                <i id="BtnMute" class="fas fa-volume-mute"></i>
-                <i style="display: none;" id="BtnVolume" class="fas fa-volume-down"></i>
-            </label>
-            <button id="Menos5"><i class="fa fa-backward"></i></button>
-            <button id="Recomeçar"><i class="fa fa-stop	"></i></button>
-            <button id="Mais5"><i class="fa fa-forward"></i></button>
-            <button id="Randomizando"><i class="fa-solid fa-shuffle"></i></button>
-            <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
-            <button id="Frente"><i class="fa-solid fa-arrow-right"></i></button>
-            <button id="NormalVolume"><i class="fa fa-volume-up"></i></button>
-            <button id="NormalPlayBack"><i class="fas fa-tachometer-alt"></i></button>
+            <div id="TP_Box_progress">
+                <div class="TP_progress_bar" id="progress_bar2">
+                    <div class="TP_progressed" id="progressed2"></div>
+                </div>
+                </div>
+                <div id="TP_Principal_Template">
+                    <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="Menos5()"><i class="fa fa-backward"></i></button>
+                    <input type="checkbox" id="PPEvent">
+                    <label for="PPEvent" >
+                        <i id="BtnPauseEvent" class="fas fa-pause"></i>
+                        <i style="display: none;" id="BtnPlayEvent" class="fas fa-play"></i>
+                    </label>
+                    <button onclick="Mais5()"><i class="fa fa-forward"></i></button>
+                    <button id="Frente"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div id="TP_Outro_Lado">
+                <input type="checkbox" id="MuteeDismute">
+                <label id="LabelControl" for="MuteeDismute">
+                    <i id="BtnMute" class="fas fa-volume-mute"></i>
+                    <i style="display: none;" id="BtnVolume" class="fas fa-volume-down"></i>
+                </label>
+                <button onclick="Recomeçar()"><i class="fa fa-stop	"></i></button>
+                <button id="Randomizar"><i class="fa-solid fa-shuffle"></i></button>
+                <button onclick="Normal_Volume()"><i class="fa fa-volume-up"></i></button>
+                <button onclick="Normal_Velocidade()"><i class="fas fa-tachometer-alt"></i></button>
+                <button onclick="Abrir_Player()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            </div>
+            <input type="range" min="0" step="0.1" max="1" id="Volume">
+            <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
         </div>
-        <input type="range" min="0" step="0.1" max="1" id="Volume">
-        <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
-    </div>
 </body>
 <script src="https://unpkg.com/wavesurfer.js"></script>
 <script src="../static/Playlist.js"></script>

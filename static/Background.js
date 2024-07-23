@@ -45,19 +45,11 @@ if (localStorage.Nota) {
     var BKCORPO = document.getElementById("BackgroundsC")
     var JSONBK = JSON.parse(LocalBK).length
     for (var i = 0; i < JSONBK; i++) {
-      var imgBKM = document.createElement("img")
-      var Caixa = document.createElement("div")
-      imgBKM.src = JSON.parse(LocalBK)[i]
-      Terminou = imgBKM.src.endsWith(".jpg") || imgBKM.src.endsWith(".jpeg") || imgBKM.src.endsWith(".png") || imgBKM.src.endsWith(".gif") || imgBKM.src.endsWith(".bmp") || imgBKM.src.endsWith("==") || imgBKM.src.endsWith("=") || imgBKM.src.endsWith(".webp")
-      if (Terminou == true) {
-        imgBKM.id = `IMGSidebar${i}`
-        imgBKM.classList = `IMGSidebar`
-      } else {
-        imgBKM.id = "IMGSidebarError"
-        imgBKM.style.display = "none"
-      }
-      Caixa.append(imgBKM)
-      BKCORPO?.append(Caixa)
+      var imgBKM = document.createElement("div")
+      imgBKM.style.backgroundImage = `url('${JSON.parse(LocalBK)[i]}')`
+      imgBKM.id = `IMGSidebar${i}`
+      imgBKM.className = "Image_Background_Escolhas"
+      BKCORPO?.append(imgBKM)
       imgBKM.addEventListener("click", function () {
         var IDBK = this.id.replace("IMGSidebar", "")
         var NewVersion = JSON.parse(LocalBK)[IDBK]

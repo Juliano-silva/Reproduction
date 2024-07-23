@@ -38,7 +38,13 @@ def Create_Table():
 def Adicionar_Musica(song_title,thumb,url,Letra,Artista,Name_Music):
     DB = sqlite3.connect(Banco_de_Dados)
     cursor = DB.cursor()
-    cursor.execute(f"""
+    if (Name_Music == "Playlist"):
+            cursor.execute(f"""
+                   INSERT OR IGNORE INTO {Name_Music} values 
+                   (NULL,"{song_title}","{thumb}","{Artista}") 
+                   """)
+    else:
+     cursor.execute(f"""
                    INSERT OR IGNORE INTO {Name_Music} values 
                    (NULL,"{song_title}","{thumb}","{url}","{Letra}","{Artista}") 
                    """)
@@ -69,28 +75,21 @@ def remove_id(Name,Id,Name_Playlist):
     return "",201
 
 def Verification_Music():
-    Array = []
     Folder = "C:/Reproduction_Folder/music"
     Quantidade_Pasta = os.listdir(Folder)
     DB = sqlite3.connect(Banco_de_Dados)
     cursor = DB.cursor()
     cursor.execute("SELECT titulo FROM Musicas")
     dados = cursor.fetchall()
-    for i in dados:
-        Array.append(i[0])
-
+    print(dados)
     for j in Quantidade_Pasta:
-        Array.remove(j)
-
-    for x in Array:
-        cursor.execute(f""" DELETE FROM Musicas WHERE titulo="{x}" """)
-        DB.commit()
-    Array = []
+        cursor.execute(f" delete from Musicas where titulo not in ('{j}')")
+    DB.commit()
 
 def Delete_all():
     DB = sqlite3.connect(Banco_de_Dados)
     cursor = DB.cursor()
-    cursor.execute(f""" DROP TABLE Musicas """)
+    # cursor.execute(f""" DROP TABLE Musicas """)
     cursor.execute(f""" DROP TABLE Playlist """)
     DB.commit()
     return "",201
@@ -107,16 +106,20 @@ def Add_Musicss(URl,Search):
         base,ext = os.path.splitext(out_file)
         Retornar = requests.get(f"https://api.vagalume.com.br/search.excerpt?apikey={Key}&q={yt.title}").json()
         for i in range(0,len(Retornar["response"]["docs"])):
-            if(Retornar["response"]["docs"][i]["band"] == yt.author):
-                artist_name = Retornar["response"]["docs"][i]["band"]
-                song_name = Retornar["response"]["docs"][i]["title"]
-                result = lyrics.find(artist_name, song_name)
-            else:
-                artist_name = Retornar["response"]["docs"][0]["band"]
-                song_name = Retornar["response"]["docs"][0]["title"]
-                result = lyrics.find(artist_name, song_name)
-        Song_Title = str(base).replace("C:/Reproduction_Folder/music\\","") + ".mp4"
-        Adicionar_Musica(Song_Title,yt.thumbnail_url,URl,result.song.lyric,result.artist.name,"Musicas") 
+            try:
+                if(Retornar["response"]["docs"][i]["band"] == yt.author):
+                    artist_name = Retornar["response"]["docs"][i]["band"]
+                    song_name = Retornar["response"]["docs"][i]["title"]
+                    result = lyrics.find(artist_name, song_name)
+                else:
+                    artist_name = Retornar["response"]["docs"][0]["band"]
+                    song_name = Retornar["response"]["docs"][0]["title"]
+                    result = lyrics.find(artist_name, song_name)
+                Song_Title = str(base).replace("C:/Reproduction_Folder/music\\","") + ".mp4"
+                Adicionar_Musica(Song_Title,yt.thumbnail_url,URl,result.song.lyric,result.artist.name,"Musicas") 
+            except:
+                Song_Title = str(base).replace("C:/Reproduction_Folder/music\\","") + ".mp4"
+                Adicionar_Musica(Song_Title,yt.thumbnail_url,URl,"None","None","Musicas") 
         Monstrar = Notification(app_id="Reproduction",
                              title=yt.title,
                              msg="Música Baixada Com Sucesso",
@@ -128,7 +131,8 @@ def Add_Musicss(URl,Search):
 @app.route("/",methods=["GET","POST"])
 def home():
     Create_Table()
-    Verification_Music()
+    # Delete_all()
+    # Verification_Music()
     return render_template("Home.html")
 
 @app.route("/Index",methods=["GET","POST"])
@@ -226,7 +230,7 @@ def PlaylistAdd():
     Titulo = data["Name"]
     Image = data["Image"]
     Array = data["MusicList"]
-    Adicionar_Musica(Titulo,Image,None,None,Array,"Playlist")
+    Adicionar_Musica(Titulo,Image,"NULL","NULL",Array,"Playlist")
     return "",201
 
 @app.route("/PlaylistSearch",methods=["GET","POST"])
@@ -264,13 +268,13 @@ def PlaylistItem():
     cursor = DB.cursor()
     cursor.execute(f"""SELECT List FROM Playlist WHERE titulo='{data["Id"]}'""")
     dados = cursor.fetchall()
-    Add = f'"{str(dados)}","{str(data["value"])}"'
+    Add = f'{str(dados)},{str(data["value"])}'
     Array.append(Add)
-    update_sql = "UPDATE Playlist SET List = ? WHERE titulo = ?"
     for value in Array:
-        cursor.execute(update_sql,f"[{removeCaracter(str(value),'"[,)]|\\')}]",str(data["Id"]))
+        cursor.execute("UPDATE Playlist SET List = ? WHERE titulo = ?",(f"{(removeCaracter(str(value),'",|\\'))}",str(data["Id"])))
         cursor.execute(" delete from Playlist where rowid not in(select min(rowid) from Playlist group by titulo);")
     DB.commit()
+    return "",201
 
 if __name__ == "__main__":
     app.run(debug=True,port=6969)

@@ -1,27 +1,28 @@
-
 function Baixar() {
-    var value = document.getElementById('AdicionarInput').value;
-
-    if(value.indexOf("https://")){
+    var Value = document.getElementById('AdicionarInput').value;
+    var value_Playlist = document.getElementById('AdicionarPlaylistInput').value
+    if (Value.indexOf("https://")) {
         console.log("Não Tem");
-    }else{
-        var value = document.getElementById('AdicionarInput').value;
-        $.ajax({
-            url: '/AddMusic',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ 'value': value })
-        });
-        document.getElementById('AdicionarInput').value = ""
+    } else {
+        if (Value.value != "") {
+            $.ajax({
+                url: '/AddMusic',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'value': Value })
+            });
+            document.getElementById('AdicionarInput').value = ""
+        }
+        else if (value_Playlist.value != "") {
+            $.ajax({
+                url: '/AddPlaylistMusic',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'value': value_Playlist })
+            });
+            document.getElementById('AdicionarPlaylistInput').value = ""
+        } else {
+            alert("Campo de Texto Vazio")
+        }
     }
-}
-
-function Baixar_Playlist(){
-    var value = document.getElementById('AdicionarPlaylistInput').value;
-        $.ajax({
-            url: '/AddPlaylistMusic',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ 'value': document.getElementById('AdicionarPlaylistInput').value })
-        });
 }
