@@ -165,8 +165,7 @@ function Carregar_Fetch(Url) {
         document.getElementById("BtnPauseEvent").addEventListener("click", function () {
           ORIGINAL.pause();
           document.getElementById("BtnPauseEvent").style.display = "none";
-          document.getElementById("BtnPlayEvent").style.display =
-            "inline-block";
+          document.getElementById("BtnPlayEvent").style.display ="inline-block";
         });
 
         document.getElementById("BtnPlayEvent").addEventListener("click", function () {

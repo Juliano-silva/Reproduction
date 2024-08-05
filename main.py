@@ -75,16 +75,34 @@ def remove_id(Name,Id,Name_Playlist):
     return "",201
 
 def Verification_Music():
+    Musicas = []
+    Banco_de_Dados = "C:/Reproduction_Folder/API.db"
     Folder = "C:/Reproduction_Folder/music"
     Quantidade_Pasta = os.listdir(Folder)
     DB = sqlite3.connect(Banco_de_Dados)
     cursor = DB.cursor()
     cursor.execute("SELECT titulo FROM Musicas")
     dados = cursor.fetchall()
-    print(dados)
     for j in Quantidade_Pasta:
-        cursor.execute(f" delete from Musicas where titulo not in ('{j}')")
+            Musicas.append(j)    
+            
+    for i in dados:
+            Musicas.append(i[0])
+            for x in Musicas:
+                if x == str(i[0]):
+                    Musicas.remove(x)
+                
+    Quantidade = len(Musicas)
+    del Musicas[Quantidade - 1]
+    try:
+        for y in Musicas:
+            os.remove(f"C:/Reproduction_Folder/music/{y}")
+            cursor.execute(f""" DELETE FROM Musicas WHERE titulo={y} """)
+    except:
+        return ""
     DB.commit()
+
+    return "",201
 
 def Delete_all():
     DB = sqlite3.connect(Banco_de_Dados)
@@ -124,7 +142,7 @@ def Add_Musicss(URl,Search):
                              title=yt.title,
                              msg="Música Baixada Com Sucesso",
                              duration="short",
-                             icon="https://i.pinimg.com/564x/4a/48/cb/4a48cb9549929924410cd489236662d8.jpg")
+                             icon="C:/Users/sustu/Pictures/Programmation/Projeto Principais/ReproductionAPP/static/Arquivos/Icon.png")
         Monstrar.show()
 
 # Rotas
@@ -132,7 +150,7 @@ def Add_Musicss(URl,Search):
 def home():
     Create_Table()
     # Delete_all()
-    # Verification_Music()
+    Verification_Music()
     return render_template("Home.html")
 
 @app.route("/Index",methods=["GET","POST"])
@@ -277,5 +295,5 @@ def PlaylistItem():
     return "",201
 
 if __name__ == "__main__":
-    app.run(debug=True,port=6969)
-    # webview.start(private_mode=False,http_server=True)
+    # app.run(debug=True,port=6969)
+    webview.start(private_mode=False,http_server=True)
