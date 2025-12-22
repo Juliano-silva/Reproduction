@@ -1,19 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adicionar TK</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body >
+  </head>
+  <body>
     <div id="Adicionar">
-        <input type="text" placeholder="Insira aqui a sua url para baixar" name="input" id="AdicionarInput">
-        <input type="text" placeholder="Insira o Id da Playlist Aqui" id="AdicionarPlaylistInput">
-        <button onclick="Baixar()" id="AdicionarButton">Baixar Músicas</button>
+      <input
+        type="text"
+        placeholder="Insira aqui a sua url para baixar"
+        name="input"
+        id="AdicionarInput"
+      />
+      <div id="Escolhas_Adicionar">
+        <input
+          checked
+          type="radio"
+          id="Music_Ip"
+          name="Escolhas_Input"
+          value="Music"
+        />
+        <label for="Music_Ip" onclick="OpenOption()">Músicas</label>
+        <input
+          type="radio"
+          id="Playlist_Ip"
+          name="Escolhas_Input"
+          value="Playlist"
+        />
+        <label for="Playlist_Ip" onclick="OpenOption()">Playlist</label>
+        <input
+          type="radio"
+          id="Background_Ip"
+          name="Escolhas_Input"
+          value="Background"
+        />
+        <label for="Background_Ip" onclick="OpenOption()">Background</label>
+        <input
+          type="radio"
+          id="Background_Value_Ip"
+          name="Escolhas_Input"
+          value="Background_Value"
+        />
+        <label for="Background_Value_Ip" onclick="ArquivoOpen()">Background File</label>
+      </div>
+      <button id="AdicionarButton">Baixar</button>
     </div>
-</body>
-<script src="../static/Add.js"></script>
+    <input
+      type="file"
+      id="BackgroundsFile"
+      style="display: none"
+      accept=".jpg, .jpeg, .png .gif"
+    />
+    <label for="BackgroundsFile" id="FileLabel">Image via Arquivo</label>
+  </body>
+  <script>
+    const Escolha_Item = document.getElementsByName("Escolhas_Input");
+    var BackgroundsFile = document.getElementById("BackgroundsFile");
+    document.getElementById("AdicionarButton").addEventListener("click", Baixar);
+
+    function ArquivoOpen(){
+      document.getElementById("AdicionarInput").style.display = "none"
+      document.getElementById("FileLabel").style.display = "block"
+      document.getElementById("AdicionarButton").innerText = "SALVAR A IMAGEM"
+    }
+
+    function OpenOption(){
+      document.getElementById("AdicionarInput").style.display = "block"
+      document.getElementById("FileLabel").style.display = "none"
+      document.getElementById("AdicionarButton").innerText = "Baixar"
+    }
+
+    function Baixar() {
+      const file = $("#BackgroundsFile")[0].files[0];
+
+      for (let i = 0; i < Escolha_Item.length; i++) {
+        if (Escolha_Item[i].checked) {
+          $.ajax({
+            url: "/Add",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              URL: AdicionarInput.value || file.name,
+              Type: Escolha_Item[i].value,
+            }),
+          });
+        }
+      }
+    }
+  </script>
 </html>

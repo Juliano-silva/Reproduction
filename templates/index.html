@@ -1,113 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reproduction TK</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
+    
+    
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script type="module" src="../static/Js_code/script.js"></script>
 
-<body id="Corpinho">
+  </head>
+
+  <body id="Corpinho">
     <!-- Player -->
     <div id="QuebraLinha"></div>
     <div id="Search_DIV">
-        <textarea id="Search" placeholder="Procurar por minhas Músicas"></textarea>
-    </div>
-    <div id="Musicas">
-        <audio id="ORIGINAL"></audio>
+      <textarea
+        id="Search"
+        placeholder="Procurar por minhas Músicas"
+      ></textarea>
     </div>
 
-    <!-- Edit -->
-    <div id="MyEdit">
-        <img id="Edit_Img">
-        <label>Titulo: <input type="text" id="MyEdit_NameMusic" placeholder="Editar o nome da música"></label>
-        <label>Autor: <input type="text" id="MyEdit_Artisc" placeholder="Editar o artista da música"></label>
-        <label>Letra: <textarea id="MyEdit_Letra" placeholder="Editar a Letra da música"></textarea></label>
-        <label>Imagem: <input type="text" id="MyEdit_Img" placeholder="Editar a Image da música"></label>
-        <button id="Btn_Edit">Salvar</button>
-    </div>
+    <audio id="ORIGINAL"></audio>
+
+    <!-- Music List -->
+    <div id="Musicas"></div>
 
     <!-- Configuração Sidebar -->
-     <div id="Sidebar_Config">
-        <div id="Sidebar_Escolha">
-        </div>
-        <div id="Add_Config"></div>
-     </div>
+    <div id="Sidebar_Config">
+      <div id="Sidebar_Escolha"></div>
+      <div id="Add_Config"></div>
+    </div>
 
     <!-- Music Mini -->
-    <div id="InfoMini">
-        <img id="TPImage" alt="">
-        <h1 id="TP_Name"></h1>
-        <h2 id="TP_Artista"></h2>
-        <div id="Painel_Templete">
-            <div id="TP_Box_progress">
-                <div class="TP_progress_bar" id="progress_bar2">
-                    <div class="TP_progressed" id="progressed2"></div>
-                </div>
-                </div>
-                <div id="TP_Principal_Template">
-                    <button id="Trás"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="Menos5()"><i class="fa fa-backward"></i></button>
-                    <input type="checkbox" id="PPEvent">
-                    <label for="PPEvent" >
-                        <i id="BtnPauseEvent" class="fas fa-pause"></i>
-                        <i style="display: none;" id="BtnPlayEvent" class="fas fa-play"></i>
-                    </label>
-                    <button onclick="Mais5()"><i class="fa fa-forward"></i></button>
-                    <button id="Frente"><i class="fa-solid fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div id="TP_Outro_Lado">
-                <input type="checkbox" id="MuteeDismute">
-                <label id="LabelControl" for="MuteeDismute">
-                    <i id="BtnMute" class="fas fa-volume-mute"></i>
-                    <i style="display: none;" id="BtnVolume" class="fas fa-volume-down"></i>
-                </label>
-                <button onclick="Recomeçar()"><i class="fa fa-stop	"></i></button>
-                <button id="Randomizar"><i class="fa-solid fa-shuffle"></i></button>
-                <button onclick="Normal_Volume()"><i class="fa fa-volume-up"></i></button>
-                <button onclick="Normal_Velocidade()"><i class="fas fa-tachometer-alt"></i></button>
-                <button onclick="Abrir_Player()"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-            </div>
-            <input type="range" min="0" step="0.1" max="1" id="Volume">
-            <input type="range" id="PlayBack" orient="vertical" min="0.1" step="0.25" max="10">
-        </div>
-    </div>
+    <div id="InfoMini"></div>
 
     <!-- Player On -->
-    <div id="MusicaPrincipal">
-        <button id="FecharPrincipal">✖</button>
-        <div id="ImagesPrincipal"></div>
-        <div id="ArtistLetras">
-            <h1 id="TextosPrincipal"></h1>
-            <h6 id="ArtistaPrincipal"></h6>
-        </div>
-        <div id="Box_progress">
-            <div class="progress_bar" id="progress_bar">
-                <div class="progressed" id="progressed"></div>
-            </div>
-        </div>
-        <div id="Escolhas_Button_Estilo">
-            <img src="../static/Arquivos/Icons_Player/Normal.png" id="Normal" alt="">
-            <img src="../static/Arquivos/Icons_Player/Recomeçar.png" id="Recomecar" style="display: none;" alt="">
-            <img src="../static/Arquivos/Icons_Player/Random.png" id="Random" style="display: none;" alt="">
-        </div>
-        <div id="Avançar">
-            <button id="TrásP"><img src="../static/Arquivos/Icons_Player/previous.png" alt=""></button>
-                <img id="Pausar2" src="../static/Arquivos/Icons_Player/pause.png" alt="">
-                <img id="play2" src="../static/Arquivos/Icons_Player/play.png" alt="">
-            <button id="FrenteP"><img src="../static/Arquivos/Icons_Player/next.png" alt=""></button>
-        </div>
-        <button id="Playlist_Btn">Adicionar a uma Playlist</button>
-        <button id="Letra_Btn" >Letra de música</button>
-        <div id="Conteudo_Playlist"></div>
-        <div id="Conteudo_Letra_Musica"></div>
-    </div>
-</body>
+    <div id="MusicBackgroud"></div>
+    <div id="MusicaPrincipal"></div>
 
-<script src="https://unpkg.com/wavesurfer.js"></script>
-<script src="../static/script.js"></script>
+    <!-- Editar -->
+    <div id="Editar"></div>
+
+  </body>
 </html>
