@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap');
 
+@font-face {
+  font-family: "Gilroy";
+  src: url("./Arquivos/Fonts/Gilroy-Light.otf");
+}
+
+@font-face {
+  font-family: "MarkOne";
+  src: url("./Arquivos/Fonts/MarkoOne-Regular.ttf");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -43,14 +53,13 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  -webkit-backdrop-filter: blur(8vh);
   color: white;
 }
 
 
-body::before{
+body::before {
   content: '';
-  background-color: var(--black-theme);
+  background-color: rgba(0, 0, 0, 0.70);
   top: 0;
   position: fixed;
   height: 100vh;
@@ -68,7 +77,7 @@ body::-webkit-scrollbar {
 }
 
 /* Sidebar */
-#Sidebar {
+#Sidebar{
   color: white;
   background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
   backdrop-filter: blur(2.6vh);
@@ -83,14 +92,35 @@ body::-webkit-scrollbar {
   transition: 1s;
   cursor: pointer;
   overflow: hidden;
+  font-family: "MarkOne";
 }
 
-#QuantideDiv,
+#Sidebar_Config{
+  color: white;
+  background-color: #252525;
+  backdrop-filter: blur(2.6vh);
+  text-decoration: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50vh;
+  height: 100%;
+  text-align: center;
+  transition: 1s;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: "MarkOne";
+  display: none;
+}
+
+#Sidebar_Config > button{
+  display: block;
+}
+
 #TempoDiv {
   color: #FFF;
   text-align: center;
-  font-family: 'Holtwood One SC', serif;
-  font-size: 1.4vh;
+  font-size: 2vh;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -103,29 +133,85 @@ body::-webkit-scrollbar {
 :is(#QuantideDiv, #TempoDiv)>h1>span {
   display: block;
   color: yellow;
+  letter-spacing: 1vh;
   text-shadow: 0.2vh 0.2vh 0.2vh black;
+}
+
+#QuantideDiv {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  column-count: 2;
+  margin-left: -2vh;
+  break-inside: avoid-column;
+}
+
+#QuantideDiv>h1 {
+  border: 0.7vh solid #0038FF;
+  color: #ffff00;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  text-align: center;
+  font-size: 3vh;
+  font-style: normal;
+  padding: 2vh;
+  height: 10vh;
+  font-weight: 400;
+  line-height: normal;
+  width: 80vh;
+  margin-left: 2vh;
+  border-radius: 0.4vh;
+  align-items: center;
+  margin-top: 4vh;
+  user-select: none;
+}
+
+#QuantideDiv>h1:hover {
+  color: black;
+  cursor: pointer;
+  text-shadow: 0.2vh 0.2vh 0.2vh white;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  font-size: 4vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  cursor: default;
+  background-image: url("https://i.pinimg.com/originals/64/db/fb/64dbfb279110e5730b698a752532605b.gif");
+}
+
+#QuantideDiv>h1::-webkit-scrollbar {
+  width: 0px;
+}
+
+#QuantideDiv > h1 > span{
+  color: white;
 }
 
 #Sidebar>a {
   display: block;
-  margin-top: 2vh;
+  margin-top: 2.2vh;
   text-decoration: none;
   text-align: left;
   margin-left: 2vh;
   color: #FFF;
   flex-shrink: 0;
-  font-family: 'Holtwood One SC', serif;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   text-shadow: 0.1vh 0.1vh 0.1vh black;
-  font-size: 2vh;
+  font-size: 2.8vh;
 }
 
 #Sidebar>a:hover {
   text-shadow: none;
   color: #FFF;
-  font-family: 'Holtwood One SC', serif;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -136,18 +222,29 @@ body::-webkit-scrollbar {
   font-size: 4vh;
 }
 
+#Add_Pasta_body> :is(input, button) {
+  margin-top: 3vh;
+}
 
 #HeaderSidebar {
   padding-top: 2vh;
   padding-bottom: 2vh;
+  margin-top: 2vh;
 }
 
-#HeaderSidebar>h1,
-#Corpo_Backgrounds>h1,
-#Caixa_de_Sobre>h2 {
+#HeaderSidebar > h1{
   color: #FFF;
-  font-family: 'Holtwood One SC', serif;
-  font-size: 4vh;
+  font-size: 5vh;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#Corpo_Backgrounds>h1,
+#Caixa_de_Sobre>h2,
+#Caixa_de_Sobre>h6 {
+  color: #FFF;
+  font-size: 5vh;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -155,6 +252,20 @@ body::-webkit-scrollbar {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#Caixa_de_Sobre>h2,
+#Caixa_de_Sobre>h6 {
+  text-align: center;
+  font-size: 6vh;
+  margin-top: 3vh;
+  padding: 2vh;
+  font-weight: bold;
+}
+
+#Caixa_de_Sobre>h6 {
+  font-size: 4vh;
+  margin-top: 10vh;
 }
 
 #Corpo_Backgrounds>h1 {
@@ -163,6 +274,7 @@ body::-webkit-scrollbar {
   font-size: 7vh;
   padding-top: 3vh;
   padding-bottom: 3vh;
+  font-family: "MarkOne";
   text-align: center;
 }
 
@@ -174,152 +286,179 @@ body::-webkit-scrollbar {
   cursor: pointer;
   z-index: 3;
   font-size: 10vh;
-  margin-top: -2vh;
-  margin-right: 1vh;
+  margin-top: -1vh;
+  margin-right: 2vh;
 }
 
-#Border > div{
+#Border{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#Border>div {
   border: 0.3vh solid;
-border-image: conic-gradient(from var(--angle), rgb(201, 201, 61), yellow, rgb(192, 192, 34), rgb(255, 255, 48)) 1;
-display: block;
-margin: auto;
-margin-top: 1vh;
-font-size: 2.5vh;
-width: 80%;
-color: #ffff00;
-text-align: center;
-text-transform: uppercase;
-text-decoration: none;
+  width: 80%;
+  border-color: #1D1B20;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin: auto;
+  padding: 2vh;
+  margin-bottom: 4vh;
+  background-color: #1D1B20;
+  border-radius: 1vh;
 }
 
-#EscolherBK > a{
+#EscolherBK>a {
+  font-size: 2.5vh;
   text-decoration: none;
   color: yellow;
 }
 
+#Border>div:hover{
+  background-color: #0a0707;
+}
+
 /* List Música */
 
-#QuebraLinha{
+#QuebraLinha {
   display: block;
   padding-top: 2vh;
 }
 
-#Search::-webkit-scrollbar{
+#Search::-webkit-scrollbar {
   width: 0px;
 }
 
-#Search{
+#Search {
   resize: none;
-  background-color: var(--color8);
-  border: 0.4vh solid var(--color3);
+  background-color: #0F011B;
+  border: 0.4vh solid #0038FF;
   border-radius: 1vh;
-  width: 80%;
+  width: 50%;
   display: block;
   padding: 1vh;
   margin: auto;
-  color: white;
+  margin-top: 1vh;
+  color: yellow;
   font-size: xx-large;
+  font-family: 'MarkOne';
   text-align: center;
-  height:4.2vh;
+  height: 4.2vh;
 }
 
-#Search::placeholder{
-  color: var(--color3);
+#Search::placeholder {
+  color: yellow;
   text-align: center;
   font-size: 3vh;
 }
 
-#Musicas{
+#Musicas {
   margin-top: 2vh;
 }
 
-#Musicas > label{
+#Musicas>label{
   display: flex;
   flex-flow: column nowrap;
 }
 
-#Musicas > label > div{
+#Musicas>label>div {
   display: flex;
 }
 
-#Boxs{
+#Boxs {
+  display: flex;
+  align-items: center;
   height: 20vh;
 }
 
-#Boxs > img{
+#Boxs>img {
   width: 13vh;
   height: 13vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2.2%;
   border-radius: 1vh;
 }
 
-#IDss{
+#IDss {
   width: 10vh;
   font-size: 6vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
+  font-family: "MarkOne";
 }
 
-#CaixaTexto{
+#CaixaTexto {
   margin-left: 2vh;
-  margin-top: 4.5vh;
   font-size: 3vh;
+  font-family: "MarkOne";
 }
 
 
-#CaixaTexto > h1{
-  font-size: 3.5vh;
+#CaixaTexto>h1 {
+  color: whitesmoke;
+  font-size: 4vh;
+  width: 140vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-#CaixaTexto > h2{
-  font-size: 2vh;
+#CaixaTexto>h2 {
+  font-size: 2.5vh;
+  color: #6100FF;
+  width: 140vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-shadow: 0.1vh 0.1vh 0.1vh black;
 }
 
-#CaixaTexto > h2{
-  color: #732CF5;
-}
 
-#CaixaTexto > h3{
+#CaixaTexto>h3 {
   display: none;
 }
 
 #InputDiv {
   position: absolute;
-  margin-top: -11.5vh;
+  margin-top: -15vh;
   height: 20vh;
   right: 0;
   margin-right: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#InputDiv > input:nth-child(1){
-  background-image: url("./Arquivos/Edit.png");
-}
-#InputDiv > input:nth-child(2){
-  background-image: url("./Arquivos/Thash.png");
-}
-
-#InputDiv > input{
+#InputDiv>button {
   all: unset;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2.2vh;
-  font-size: 0px;
-  width: 5vh;
-  height: 5vh;
+  width: 7vh;
+  height: 7vh;
+  cursor: pointer;
+  margin-right: 10vh;
+  position: absolute;
+}
+
+#Abrir_Escolha{
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 40vh;
+  bottom: 0;
+  background-color: #252525;
+}
+
+#InputDiv > button:nth-child(1){
+  background-image: url("./Arquivos/Icons_Config/three-dots.png");
 }
 
 /* MusicaPrincipal */
 
-#MusicaPrincipal{
+#MusicaPrincipal {
   background-color: var(--black-theme);
   position: fixed;
   width: 100%;
@@ -328,14 +467,161 @@ text-decoration: none;
   overflow: auto;
 }
 
-#MusicaPrincipal::-webkit-scrollbar{
-  width: 0px;
+#Escolhas_Button_Estilo{
+  width: 15vh;
+  height: 15vh;
+  position: absolute;
+  margin-top: 15vh;
+  margin-left: 10vh;
+}
+
+#Escolhas_Button_Estilo > img{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
 
 
 
+#MusicaPrincipal::-webkit-scrollbar {
+  width: 0px;
+}
+
+#Playlist_Btn,#Letra_Btn{
+  position: absolute;
+  padding: 2vh;
+  background-color: #0F011B;
+  color: yellow;
+  border: 0.4vh solid #0038FF;
+  width: 30vh;
+  border-radius: 2vh;
+  cursor: pointer;
+  text-align: center;
+  font-size: 2vh;
+  margin-top: -10vh;
+  margin-left: 2vh;
+}
+
+#Add_Config > button{
+  display: block;
+  margin: auto;
+  padding: 2vh;
+  background-color: #0F011B;
+  color: yellow;
+  border: 0.4vh solid #0038FF;
+  width: 80%;
+  border-radius: 2vh;
+  cursor: pointer;
+  text-align: center;
+  font-size: 2vh;
+  margin-top: 2vh;
+}
+
+#Letra_Btn{
+  right: 0;
+  margin-right: 2vh;
+}
+
+#Letra_Body{
+  color: white;
+  width: 80%;
+  padding: 2vh;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  position: absolute;
+}
+
+
+#MyEdit {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #151515;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  display: none;
+}
+
+#MyEdit> label{
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  font-family: "MarkOne";
+  padding: 2vh;
+  font-size: 2.5vh;
+}
+
+#MyEdit > label > :is(input,textarea){
+  all: unset;
+  margin-left: 2vh;
+  width: 60%;
+  border: 0.4vh solid #0038FF;
+  color: #ffff00;
+  padding: 2vh;
+  text-align: center;
+}
+
+#MyEdit > label > :is(input,textarea)::placeholder{
+  color: #ffff00;
+}
+
+#MyEdit  > label > textarea{
+  height: 40vh;
+}
+
+#MyEdit > button{
+  all: unset;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  padding: 2vh;
+  border: 0.4vh solid #0038FF;
+  background-color: #0F011B;
+  color: yellow;
+  font-size: 4vh;
+  padding: 2vh;
+  margin-right: 2vh;
+  width: 20%;
+  text-align: center;
+}
+
+#Sidebar_Escolha{
+  height: 45vh;
+  overflow: auto;
+  width: 80%;
+  display: block;
+  margin: auto;
+  top: 0;
+  font-size: 1.5vh;
+  padding: 2vh;
+  font-family: "MarkOne";
+}
+
+#Sidebar_Escolha::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Sidebar_Escolha > img{
+  width: 90%;
+  height: 60%;
+}
+
+#Sidebar_Escolha > button{
+  all: unset;
+  display: block;
+  margin: auto;
+
+}
+
 /* Adicionar e Background */
-#Adicionar,#Background_Bk{
+#Adicionar,
+#Background_Bk {
   all: unset;
   position: absolute;
   top: 50%;
@@ -345,19 +631,55 @@ text-decoration: none;
   width: 80%;
 }
 
-#FecharPrincipal{
+#Adicionar{
+  height: 40vh;
+}
+
+#FecharPrincipal {
   all: unset;
   position: absolute;
   top: 0;
   font-size: 8vh;
+  cursor: pointer;
   margin-left: 2vh;
+  z-index: 2;
 }
 
-#ImagesPrincipal{
-  width: 100%;
-  height: 80vh;
+#ImagesPrincipal {
+  width: 60%;
+  height: 85%;
+  position: relative;
+  display: block;
+  margin: auto;
+  margin-top: 4vh;
+  background-repeat: no-repeat;
+  background-size: 60% 90%,auto;
+  background-position: center top;
+  background-attachment: fixed;
+  border-radius: 2vh;
 }
 
+#TextosPrincipal {
+  text-align: center;
+  font-size: 7vh;
+  color: #EAF0FF;
+  width: 70%;
+  display: block;
+  margin: auto;
+  margin-top: 2.2vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: "MarkOne";
+}
+
+#ArtistaPrincipal {
+  text-align: center;
+  font-size: 3.5vh;
+  margin-top: 0.5vh;
+  color: #6100FF;
+  font-family: "MarkOne";
+}
 
 #Avançar {
   display: flex;
@@ -374,7 +696,6 @@ text-decoration: none;
   cursor: pointer;
   z-index: 1;
   top: 0;
-  filter: drop-shadow(0.2vh 0.2vh 0.2vh white);
 }
 
 #TrásP>img,
@@ -383,123 +704,499 @@ text-decoration: none;
   height: 35vh;
 }
 
+#Container_Btn>button {
+  all: unset;
+  position: absolute;
+  margin-top: -50vh;
+  margin-left: -22vh;
+  width: 35vh;
+  cursor: pointer;
+  height: 35vh;
+  filter: drop-shadow(0.2vh 0.2vh 0.2vh wheat);
+}
+
 #play2,
 #Pausar2 {
-  filter: drop-shadow(0.2vh 0.2vh 0.2vh white);
   display: flex;
-  width: 35vh;
+  width: 50vh;
 }
+
+/* Letra de Música Body */
+#Conteudo_Letra_Musica,#Conteudo_Playlist{
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  height: 100vh;
+  width: 100%;
+  display: none;
+  background-color: #151515;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+}
+#Letra_Button_Body{
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+#Letra_Button_Body > :is(h1,h6,p){
+  padding: 1vh;
+  font-size: 2vh;
+}
+
+#Letra_Button_Body > h1{
+  font-size: 4vh;
+  color: #0038FF;
+  font-weight: bold;
+  text-shadow: 0.1vh 0.1vh 0.1vh #0d2da1;
+}
+
+#Letra_Button_Body > h6{
+  color: #6100FF;
+  font-size: 3vh;
+  font-weight: bold;
+
+}
+
+#Letra_Button_Body > p{
+  overflow: auto;
+  height: 80%;
+  font-size: 2vh;
+  color: white;
+}
+
+#Letra_Button_Body > p::-webkit-scrollbar{
+  width: 0px;
+}
+
+/* Playlist Body Button */
+
+#Caixa_Principal2{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  height: 80%;
+  width: 92%;
+  padding: 2vh;
+  overflow: auto;
+}
+
+#Caixa_Principal2::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Caixa_Principal{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+
+.Playlist_Button_Body > :is(button,h1){
+  all: unset;
+  font-size: 5vh;
+  cursor: pointer;
+  margin: auto;
+  display: none;
+}
+.Playlist_Button_Body > h1{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: white;
+  text-shadow: 0.2vh 0.2vh 0.2vh black;
+}
+
+.Playlist_Button_Body:hover{
+  backdrop-filter: blur(2.6vh);
+}
+
+
+.Playlist_Button_Body> button{
+  font-size: 15vh;
+}
+
+.Playlist_Button_Body{
+  border: 0.4vh solid white;
+  width: 25%;
+  height: 30vh;
+  margin-left: 2vh;
+  margin-top: 2vh;
+  padding: 2vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 
 /* Audio */
 .progress_bar {
-  height: 2.6vh;
+  height: 3.8vh;
   width: 80%;
   display: block;
   margin: auto;
   border-radius: 1vh;
   overflow: hidden;
-  background-color: #151515;
+  background-color: rgb(24, 22, 22);
 }
 
 .progressed {
-  height: 2.6vh;
-  background: url("https://i.pinimg.com/originals/64/db/fb/64dbfb279110e5730b698a752532605b.gif") fixed no-repeat center;
+  height: 100%;
+  background-color: #052f83;
   background-size: cover;
   width: 50%;
   transition: all 0.1ms;
   position: relative;
 }
 
-#Box_progress{
+#Box_progress {
   margin-top: 4vh;
 }
 
 .progressed::after {
   content: '';
   position: absolute;
-  right: -1vh;
+  right: -1.5vh;
   top: -0vh;
-  width: 2.6vh;
-  height: 2.6vh;
+  width: 3.8vh;
+  height: 100%;
   border-radius: 50%;
-  background-color: rgb(25, 6, 112);
+  background-color: #052157;
 }
 
-
-
-#AdicionarInput,#BackgroundsText{
-  all: unset;
+#LetraMusics {
+  font-size: 3vh;
+  text-align: justify;
+  width: 60%;
   display: block;
+  line-height: 5vh;
   margin: auto;
-  width: 80%; 
+  color: whitesmoke;
+  text-shadow: 0.1vh 0.1vh 0.1vh #6132E3;
   padding: 2vh;
-  text-align: center;
-  border: 0.2vh solid var(--color3);
-  background-color: var(--color8);
-  font-size: 2vh;
-  border-radius: 0.2vh;
 }
 
-#AdicionarButton,#Background_Bk > button{
-  all: unset;
+#PlaylistHome>h1 {
+  color: yellow;
+  padding: 2vh;
   cursor: pointer;
+  font-weight: bold;
+  font-family: "Girloy";
+}
+
+#Conteudo {
+  text-align: center;
+  padding: 2vh;
+}
+
+#AdicionarInput,
+#BackgroundsText,
+#Playlist_Input>input,
+#Add_Pasta,
+#AdicionarPlaylistInput {
+  color: yellow;
+  border: 0.4vh solid #0038FF;
+  padding: 2vh;
+  background-color: transparent;
+  text-align: center;
   display: block;
   margin: auto;
+  margin-top: 2vh;
+  font-size: 3vh;
+  width: 80%;
+  border-radius: 1vh;
+}
+
+#Playlist_Input>input {
+  margin-top: 2vh;
+}
+
+#AdicionarPlaylistInput{
+  margin-top: 5vh;
+}
+
+#AdicionarButton,
+#Background_Bk>button,
+#Add_Playlist_Btn,
+#Btn_Add_Pasta,
+#Escolha_Itens_Playlist > button,
+#Conteudo>button {
+  all: unset;
+  display: block;
+  margin: auto;
+  margin-top: 1vh;
+  cursor: pointer;
+  padding: 2vh;
+  border: 0.4vh solid #0038FF;
+  background-color: #0F011B;
+  color: yellow;
+  font-size: 4vh;
+  padding: 2vh;
+  margin-top: 2vh;
   width: 20%;
   text-align: center;
-  border: 0.2vh solid var(--color3);
-  background-color: var(--color8);
-  padding: 1vh;
+}
+
+#FecharPrincipal_Btn {
+  all: unset;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 8vh;
+  cursor: pointer;
+  margin-left: 2vh;
+}
+
+#AdicionarButton{
+  margin-top: 4vh;
+}
+
+#Conteudo>button {
+  display: inline-block;
+}
+
+:is(#BackgroundsText, #AdicionarInput, #Add_Pasta,#AdicionarPlaylistInput)::placeholder,
+#Playlist_Input>input::placeholder {
   color: var(--color3);
 }
 
-:is(#BackgroundsText,#AdicionarInput)::placeholder{
-  color: var(--color3);
-}
-
-#FileLabel{
+#FileLabel {
   position: absolute;
   bottom: 0;
-  background-color: var(--color7);
-  color: var(--color1);
+  background-color: #0038FF;
+  color: var(--color3);
+  border: 0.4vh solid #052157;
   cursor: pointer;
   width: 100%;
+  font-size: 3vh;
   text-align: center;
   padding: 2vh;
 }
 
 /* Background */
 
-#BackgroundsC {
-	max-width: 100%;
-	margin: 0 auto;
-	column-count: 3; 
-}
-
-#BackgroundsC > div > img {
-	display: block;
-	max-width: 100%;
-}
-
-#BackgroundsC > div {
+.Image_Background_Escolhas{
+  display: block;
+  margin: auto;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 85%;
+  height: 75vh;
   margin-top: 2vh;
-	break-inside: avoid-column;
-	overflow: hidden;
+  border-radius: 0.2vh;
 }
 
+.Image_Background_Escolhas:hover{
+  border: 0.4vh solid white;
+  cursor: pointer;
+}
 
 /* Esconder */
-#Sidebar,#MyEdit,#InfoMini,#MusicaPrincipal,#play2{
+#Sidebar,
+#InfoMini,
+#play2,
+#MusicaPrincipal {
   display: none;
 }
 
-/* Playlist */
-#Escolha_ITEM{
+/* Templete */
+#InfoMini {
+  height: 25vh;
+  width: 100%;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  bottom: 0;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#TPImage {
+  width: 22vh;
+  position: absolute;
+  top: 0;
+  height: 85%;
+  margin-top: 2vh;
+  margin-left: 2vh;
+  background-color: white;
+  border-radius: 2vh;
+  border: 0.4vh solid #0a0707;
+}
+
+#TP_Name,#TP_Artista{
+  position: absolute;
+  margin-left: 25vh;
+  font-size: 4vh;
+  height: 5vh;
+  padding: 2vh;
+  color: yellow;
+}
+
+#TP_Artista{
+  color: white;
+  margin-top: 4.5vh;
+}
+
+.TP_progress_bar {
+  height: 3.8vh;
+  width: 80%;
+  border-radius: 1vh;
+  overflow: hidden;
+  background-color: rgb(24, 22, 22);
+}
+
+.TP_progressed {
+  height: 100%;
+  background-color: #052f83;
+  background-size: cover;
+  width: 50%;
+  transition: all 0.1ms;
+  position: relative;
+}
+
+#TP_Box_progress {
+  margin-top: 2vh;
+  width: 120vh;
+}
+
+.TP_progressed::after {
+  content: '';
+  position: absolute;
+  right: -1.5vh;
+  top: -0vh;
+  width: 3.8vh;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #052157;
+}
+
+
+#Escolha_ITEM {
   border: 0.2vh solid white;
   cursor: pointer;
 }
 
-#Abrir_Playlist{
+#Painel_Templete {
+  position: absolute;
+  padding: 2vh;
+  margin-left: 26vh;
+  margin-bottom: -0.5vh;
+  bottom: 0;
+}
+
+
+
+#TP_Principal_Template{
+  width: 96vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+#TP_Principal_Template > button{
+  all: unset;
+}
+
+#TP_Principal_Template > label > i,
+#TP_Principal_Template > button{
+  font-size: 5vh;
+  width: 5vh;
+  cursor: pointer;
+  padding-left: 2vh;
+  margin-top: 1vh;
+}
+
+#TP_Principal_Template > label > i:hover,#TP_Principal_Template > button:hover{
+  color: #D732A8;
+}
+
+#TP_Outro_Lado{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2vh;
+  height: 100%;
+  text-align: center;
+  width: 40vh;
+}
+
+#TP_Outro_Lado > button{
+  all: unset;
+}
+
+#TP_Outro_Lado > label > i,
+#TP_Outro_Lado > button{
+  font-size: 3vh;
+  padding-left: 2vh;
+  cursor: pointer;
+}
+
+#PlayBack,#Volume {
+  transform: rotate(270deg);
+  background: #1A2665;
+  opacity: 0.7;
+  height: 2vh;
+  width: 15vh;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  --angle: 0deg;
+  position: absolute;
+  outline: 0;
+  border-radius: 2vh;
+  appearance: none;
+}
+
+
+#Volume,#PlayBack{
+  right: 0;
+  margin-right: 11vh;
+  margin-top: 13vh;
+}
+#PlayBack{
+  margin-right: 4.8vh;
+}
+
+#Volume:hover,
+#PlayBack:hover {
+  opacity: 1;
+}
+
+#Volume::-webkit-slider-thumb,
+#PlayBack::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.8vh;
+  height: 1.8vh;
+  background: #6184FF;
+  border: 0.4vh solid #6184FF;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Playlist */
+
+#Abrir_Playlist {
   display: none;
   background-color: #151515;
   width: 100%;
@@ -509,8 +1206,213 @@ text-decoration: none;
   top: 0;
 }
 
-#InfoMini{
+#Playlist_Input{
+  background-color: #151515;
+  background: radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(165, 239, 255, 0.20) 0%, rgba(110, 191, 244, 0.04) 77.08%, rgba(70, 144, 212, 0.00) 100%);
+  backdrop-filter: blur(2.6vh);
+  position: fixed;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  top: 0;
+  height: 100vh;
+  display: none;
   z-index: 2;
+}
+
+#Abrir_Playlist::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Playlist_List {
   position: absolute;
-  bottom: 0;
+  top: 0;
+  display: flex;
+  flex-flow: row wrap;
+  align-content:flex-start;
+  justify-content:flex-start;
+  overflow: auto;
+  height: 95vh;
+}
+
+#Playlist_List::-webkit-scrollbar{
+  width: 0px;
+}
+
+#Playlist_List>div {
+  width: 40vh;
+  padding: 2vh;
+  height: 40vh;
+  overflow: auto;
+  margin-left: 2vh;
+  cursor: pointer;
+}
+
+#Playlist_List > div > div{
+  width: 80%;
+  height: 80%;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  border-radius: 0.4vh;
+}
+
+#Caixa_Button{
+  position: relative
+}
+
+#Caixa_Button > button{
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  all: unset;
+  text-align: center;
+  font-size: 25vh;
+  width: 100%;
+  height: 100%;
+  color: #E3D432;
+  z-index: 0;
+  background-color: #062d7a;
+}
+
+#Playlist_List>div::-webkit-scrollbar {
+  width: 0px;
+}
+
+#Playlist_List>div>h1 {
+  color:#ffff00;
+  text-shadow: 0.1vh 0.1vh 0.1vh #1c162e;
+  text-align: left;
+  padding-top: 1vh;
+  padding-left: 4vh;
+  font-family: "MarkOne";
+  letter-spacing: 0.5vh;
+  font-size: 4vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#Playlist_List>div>h6{
+  padding-left: 4vh;
+  text-align: left;
+  color: white;
+  font-size: 2vh;
+}
+
+#Playlist_List>div>img {
+  display: block;
+  margin: auto;
+  width: 100%;
+  height: 80%;
+}
+
+#Escolha_Image_Playlist {
+  margin-left: 10vh;
+  width: 30vh;
+  height: 30vh;
+
+}
+
+#Escolha_Name_Playlist {
+  font-size: 9vh;
+  color: #93b9ff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: "MarkOne";
+}
+
+#Caixa_Escolha_Div{
+  top: 0;
+  position: absolute;
+  width: 80vh;
+  margin-left: 40vh;
+  margin-top: 2vh;
+  padding: 2vh;
+  text-align: left;
+  height: 25vh;
+}
+
+#Escolha_Informações{
+  font-size: 4vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#Escolha_Playlist_Num{
+  color: #ffff00;
+  font-size: 7vh;
+}
+
+#Escolha_Div{
+  background-color: rgb(217, 217, 217,20%);
+  padding: 2vh;
+  position: relative;
+  width: 100%;
+  top: 0;
+  height: 30vh;
+  font-family: "MarkOne";
+}
+
+#Escolha_Itens_Playlist{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#Escolha_Itens_Playlist > div{
+  display: flex;
+  position: relative;
+  font-family: "MarkOne";
+  height: 20%;
+  width: 100%;
+  margin-top: 2vh;
+}
+
+#Escolha_Itens_Playlist > div > img{
+  width: 10vh;
+  height: 10vh;
+  margin-left: 2vh;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2vh;
+  text-align: center;
+  align-content: center;
+  margin-top: 1vh;
+}
+
+#Caixa_Texto_Body_Playlist > h1{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 4vh;
+  margin-top: 2vh;
+  color: white;
+  padding-left: 2vh;
+}
+
+#Caixa_Texto_Body_Playlist  > p{
+  color: #6100FF;
+  padding-left: 2vh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 2vh;
+}
+
+#Escolha_Itens_Playlist > div > h2{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  font-size: 5vh;
+  padding: 2vh;
+  width: 5%;
+  font-weight: bold;
 }

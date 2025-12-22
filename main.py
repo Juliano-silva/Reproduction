@@ -1,158 +1,160 @@
 #Dependencies
 from flask import *
-from pytube import YouTube
-import os , glob , json , webview , ctypes , random , urllib.request , shutil
+import os , glob , json , webview , ctypes , random , sqlite3,requests,urllib.request
+from pytube import Playlist,YouTube
+from vagalume import lyrics
 from winotify import Notification
-import requests
-# App stuff
+
 app = Flask(__name__)
-webview.create_window('Reproduction', app,resizable=True,width=1000,height=600 ,http_port=6969,js_api=True,minimized=True,on_top=True)
-#Routers
-Diretorio = r"C:\\Reproduction_Folder\\music"
-Diretorios = "C:/Reproduction_Folder/db.json"
-Galeria = "C:\\Reproduction_Folder\\Imagens"
+webview.create_window('Reproduction', app,resizable=True,width=1200,height=700 ,http_port=6969,js_api=True,minimized=True)
 
-# Functions
+# Caminhos
+Banco_de_Dados = "C:/Reproduction_Folder/API.db"
+Diretorio = "C:\\Reproduction_Folder\\music"
+Key = "666888f22b401b1859e2d405495c47ee"
+Array = []
+Musicas = []
+Not_Exist = []
+Remove_Exist = []
 
-# Se não existe ele cria
 existe = os.path.exists("C:\\Reproduction_Folder")
 if(existe == False):
     os.makedirs("C:\\Reproduction_Folder")
-    Arquivos = open('C:/Reproduction_Folder/Img.json','x',encoding="utf-8")
-    Arquivo = open('C:/Reproduction_Folder/db.json','x',encoding="utf-8")
-else:
-    print("Arquivo Já Criado")
+    Arquivo = open('C:/Reproduction_Folder/API.db','x',encoding="utf-8")
 
-# Adicionar música
-@app.route("/AddMusic",methods=["POST"])
-def AddMusic():
-    JsonImg = 'C:/Reproduction_Folder/Img.json'
-    data = request.get_json()
-    # Video Baixar URL
-    yt = YouTube(str(data['value']))
-    video = yt.streams.filter(only_audio=True).first()
-    out_file = video.download(output_path="C:/Reproduction_Folder/music")
-    base, ext = os.path.splitext(out_file)
-    # Thumb Baixar URL
-    Url_file = yt.thumbnail_url
-    # Notificação
-    Monstrar = Notification(app_id="Reproduction",
-                       title=yt.title,
-                       msg="Música Baixada Com Sucesso",
-                       duration="short",
-                       icon="C:\Reproduction_Folder\ReproductionIcon.jpg")
-    Monstrar.show()
-    new_file = base + '.mp3'
-    os.rename(out_file, new_file)
-    file = open(JsonImg)
-    x = file.read()
+def removeCaracter(old,to_remove):
+    new_string = old
+    for x in to_remove:
+        new_string = new_string.replace(x,'')
+    return new_string
 
-    if len(x) <= 0:
-        finaldata = '{"Imgs": []}'
-        with open(JsonImg,"w") as img:
-            img.write(str(finaldata).replace("]}",f'"{Url_file}"' + "]}"))
+def Create_Table():
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS Musicas (id INTEGER PRIMARY key AUTOINCREMENT, titulo TEXT UNIQUE, Image BLOB , url TEXT,Letra TEXT,Artista TEXT)""")
+    cursor.execute("""CREATE TABLE IF NOT EXISTS Playlist (id INTEGER PRIMARY key AUTOINCREMENT, titulo TEXT UNIQUE, Image BLOB , List BLOB)""")
+    DB.commit()
+
+def Adicionar_Musica(song_title,thumb,url,Letra,Artista,Name_Music):
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    if (Name_Music == "Playlist"):
+            cursor.execute(f"""
+                   INSERT OR IGNORE INTO {Name_Music} values 
+                   (NULL,"{song_title}","{thumb}","{Artista}") 
+                   """)
     else:
-        New_Dots = f',"{Url_file}"'
-        finaldata = str(json.loads(x)).replace("]}",f'{New_Dots}]').replace("'",'"').replace('[,"','["')
-        with open(JsonImg,"w") as img:
-            img.write(finaldata + "}")
+     cursor.execute(f"""
+                   INSERT OR IGNORE INTO {Name_Music} values 
+                   (NULL,"{song_title}","{thumb}","{url}","{Letra}","{Artista}") 
+                   """)
+    cursor.execute(f"""
+                   delete from {Name_Music} where rowid not in
+                   (select min(rowid) from {Name_Music}
+                   group by titulo);
+                   """)
+    DB.commit()
 
-    return render_template("Adicionar.html")
+def Edit(Nome,Image,Letra,Artista,Id):
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    cursor.execute(f"""
+                   UPDATE Musicas SET titulo="{Nome}", Image="{Image}", Letra="{Letra}", Artista="{Artista}" WHERE id={Id}
+                   """)
+    DB.commit()
+    return "",201
 
-# Adicionar Background
-@app.route('/AddURL', methods=['POST'])
-def AddUrl():
-   datas = request.get_json()
-   result = datas['value']
-   ctypes.windll.user32.SystemParametersInfoW(20,0,result,0)
-   Random = random.randint(0,100000)
-   urllib.request.urlretrieve(result, Galeria + "\\" + f"{Random}.png")
-   return '',201
+def remove_id(Name,Id,Name_Playlist):
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    dir_list = os.listdir("C:/Reproduction_Folder/music/")
+    if (Name != "NULL"):
+        os.remove(f"C:/Reproduction_Folder/music/{dir_list[Name]}")
+    cursor.execute(f""" DELETE FROM {Name_Playlist} WHERE id={Id} """)
+    DB.commit()
+    return "",201
 
+def Verification_Music():
+    Musicas = []
+    Banco_de_Dados = "C:/Reproduction_Folder/API.db"
+    Folder = "C:/Reproduction_Folder/music"
+    Quantidade_Pasta = os.listdir(Folder)
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    cursor.execute("SELECT titulo FROM Musicas")
+    dados = cursor.fetchall()
+    for j in Quantidade_Pasta:
+            Musicas.append(j)    
+            
+    for i in dados:
+            Musicas.append(i[0])
+            for x in Musicas:
+                if x == str(i[0]):
+                    Musicas.remove(x)
+                
+    Quantidade = len(Musicas)
+    del Musicas[Quantidade - 1]
+    try:
+        for y in Musicas:
+            os.remove(f"C:/Reproduction_Folder/music/{y}")
+            cursor.execute(f""" DELETE FROM Musicas WHERE titulo={y} """)
+    except:
+        return ""
+    DB.commit()
 
-# Remover as Músicas e Imagens
-@app.route("/RemoveFunc",methods=['POST'])
-def Remover():
-    datas = request.get_json()
-    result = datas['value']
-    Image = datas['Img']
-    with open ("C:/Reproduction_Folder/Img.json",'r',encoding="utf-8") as my_json:
-        data = json.load(my_json)
-        delete = data['Imgs'][int(Image)]
-    with open("C:/Reproduction_Folder/Img.json",'w',encoding="utf-8") as files:
-        files.write(str(data).replace(delete,"").replace("'',","").replace("'",'"'))
-    os.remove(Diretorio + "\\" + result)
-    return '',201
+    return "",201
 
-@app.route('/music/<path:filename>')
-def MusicFolder(filename):
-    return send_from_directory(Diretorio + "\\",filename)
+def Delete_all():
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    # cursor.execute(f""" DROP TABLE Musicas """)
+    cursor.execute(f""" DROP TABLE Playlist """)
+    DB.commit()
+    return "",201
 
-@app.route('/Fotos/<path:filename>')
-def ImageFolder(filename):
-    return send_from_directory(Galeria + "\\",filename)
-
-@app.route("/ThumbJson",methods=["GET","POST"])
-def Thumb():
-    with open ("C:/Reproduction_Folder/Img.json",encoding="utf-8") as my_json:
-        dados = json.load(my_json)
-        return jsonify(dados)
-
-@app.route("/AddFolder",methods=["POST","GET"])
-def AddFolder():
-     datas = request.get_json()
-     result = datas['value']
-     with open(Diretorios,"r",encoding="utf-8") as direct:
-        dados = json.load(direct)
-        PastasBusca = dados["Pastas"]
-        if len(PastasBusca) <= 0:
-            JsonCompleto = f"] , 'Pastas':[{result}]" + "}"
-            PastaFull = str(dados).replace("]}",JsonCompleto).replace("'",'"')
-            with open(Diretorios,"w",encoding="utf-8") as Envia:
-                Envia.write(PastaFull)
-        else:
-            PastaFull = str(dados).replace(str(PastasBusca),result).replace("'",'"')
-            with open(Diretorios,"w",encoding="utf-8") as Envia:
-                Envia.write(PastaFull)
-     return "",201
-
-@app.route("/DadosMusic",methods=["GET","POST"])
-def Music():
-    with open("C:/Reproduction_Folder/db.json",encoding="utf-8") as meu_json:
-        dados = json.load(meu_json)
-        return jsonify(dados)
+def Add_Musicss(URl,Search):
+    if(Search == "Youtube"):
+        Content = [f"https://www.youtube.com/watch?v={URl.video_id}"]
+    else:
+        Content = URl
+    for url in Content:
+        yt = YouTube(url)
+        music = yt.streams.filter(only_audio=True).first()
+        out_file = music.download(output_path="C:/Reproduction_Folder/music")
+        base,ext = os.path.splitext(out_file)
+        Retornar = requests.get(f"https://api.vagalume.com.br/search.excerpt?apikey={Key}&q={yt.title}").json()
+        for i in range(0,len(Retornar["response"]["docs"])):
+            try:
+                if(Retornar["response"]["docs"][i]["band"] == yt.author):
+                    artist_name = Retornar["response"]["docs"][i]["band"]
+                    song_name = Retornar["response"]["docs"][i]["title"]
+                    result = lyrics.find(artist_name, song_name)
+                else:
+                    artist_name = Retornar["response"]["docs"][0]["band"]
+                    song_name = Retornar["response"]["docs"][0]["title"]
+                    result = lyrics.find(artist_name, song_name)
+                Song_Title = str(base).replace("C:/Reproduction_Folder/music\\","") + ".mp4"
+                Adicionar_Musica(Song_Title,yt.thumbnail_url,URl,result.song.lyric,result.artist.name,"Musicas") 
+            except:
+                Song_Title = str(base).replace("C:/Reproduction_Folder/music\\","") + ".mp4"
+                Adicionar_Musica(Song_Title,yt.thumbnail_url,URl,"None","None","Musicas") 
+        Monstrar = Notification(app_id="Reproduction",
+                             title=yt.title,
+                             msg="Música Baixada Com Sucesso",
+                             duration="short",
+                             icon="C:/Users/sustu/Pictures/Programmation/Projeto Principais/ReproductionAPP/static/Arquivos/Icon.png")
+        Monstrar.show()
 
 # Rotas
-
 @app.route("/",methods=["GET","POST"])
 def home():
+    Create_Table()
+    # Delete_all()
+    Verification_Music()
     return render_template("Home.html")
 
 @app.route("/Index",methods=["GET","POST"])
 def index():
-    # Files List All
-    files = list(filter(os.path.isfile, glob.glob(Diretorio + "\\*"))) 
-    files.sort(key=os.path.getctime) 
-
-    # Imagens List All
-    Mural = list(filter(os.path.isfile, glob.glob(Galeria + "\\*"))) 
-    Mural.sort(key=os.path.getctime)
-
-    # Folder List all
-    with open(Diretorios,"r",encoding="utf-8") as folders:
-        Objects = json.load(folders)
-        PastasBusca = Objects["Pastas"]
-        for x in PastasBusca:
-            if os.path.isdir(x):
-                folder = list(filter(os.path.isfile, glob.glob(x + "\\*"))) 
-                folder.sort(key=os.path.getctime)
-                for x in folder:
-                    PastaFolders = str(x).replace('\\',"/")
-                    shutil.move(PastaFolders.replace("\\","/"),"C:/Reproduction_Folder/music/")
-        # Combinar
-    with open('C:/Reproduction_Folder/db.json','w',encoding="utf-8") as arquivo:
-        Escrito = str('{"Name_Music":' f"{files},'Galeria':{Mural},'Pastas':{PastasBusca}""}")
-        arquivo.write(Escrito.replace("\\","").replace("C:Reproduction_Foldermusic","").replace("C:Reproduction_FolderImagens","").replace("'",'"'))
     return render_template("index.html")
 
 @app.route("/Adicionar",methods=["GET","POST"])
@@ -163,8 +165,8 @@ def Add():
 def Bk():
     return render_template("Backgrounds.html")
 
-@app.route("/Playlist",methods=["GET","POST"])
-def Playlist():
+@app.route("/Playlist_Route",methods=["GET","POST"])
+def Playlist_Route():
     return render_template("Playlist.html")
 
 @app.route("/Config",methods=["GET","POST"])
@@ -175,10 +177,123 @@ def Sob():
 def BackgroundEscolha():
     return render_template("BackgroundEscolha.html")
 
-@app.route("/RotaAdd",methods=["GET","POST"])
-def RotaAdd():
-    return render_template("AdicionarRotas.html")
+# Functions
+@app.route("/AddPlaylistMusic",methods=["GET","POST"])
+def AddPlaylistMusic():
+    data = request.get_json()
+    playlist_Gerar = f"https://music.youtube.com/playlist?list={str(data['value']).replace("list=","")[46:]}"
+    Retornar = Playlist(playlist_Gerar)
+    Add_Musicss(Retornar,"Playlist")
+    return render_template("Adicionar.html")
+
+@app.route("/AddMusic",methods=["POST","GET"])
+def AddMusic():
+    data = request.get_json()
+    URl = str(data['value'])
+    Retornar = YouTube(URl)
+    Add_Musicss(Retornar,"Youtube")
+    return render_template("Adicionar.html")
+
+@app.route("/Removendo",methods=["GET","POST"])
+def Remover():
+    data = request.get_json()
+    Id = str(data["value"])
+    Name = int(data["Titulo"])
+    remove_id(Name,Id,"Musicas")
+    return "",201
+
+@app.route("/Delete_All_Btn",methods=["GET","POST"])
+def Delete_All_Btn():
+    Delete_all()
+    return "",201
+
+@app.route("/Remove_Playlist_Btn",methods=["GET","POST"])
+def Remove_Btn():
+    data = request.get_json()
+    Id = str(data["value"])
+    remove_id("NULL",Id,"Playlist")
+    return "",201
+
+@app.route("/Extractor",methods=["GET","POST"])
+def Extractor():
+    data = request.get_json()
+    Aceitar = [".mp4",".m4a",".mp3",".flac",".wav"]
+    CaminhoAntigo = (rf"{data["value"]}").replace("\\", "/")
+    for i in range(0,len(Aceitar)):
+        for j in os.listdir(CaminhoAntigo):
+            if j.endswith(Aceitar[i]):
+                Caminho = f"C:/Reproduction_Folder/music/{j}"
+                base = f"{CaminhoAntigo}/{j}"
+                os.rename(base,Caminho)
+    return "",201
+
+@app.route("/Editar",methods=["GET","POST"])
+def Editar():
+    data = request.get_json()
+    Id = str(data["value"])
+    Nome = data["Nome"]
+    Image = data["Image"]
+    Letra = data["Letra"]
+    Artista = data["Artista"]
+    Edit(Nome,Image,Letra,Artista,Id)
+    return render_template("index.html")
+
+@app.route('/music/<path:filename>')
+def MusicFolder(filename):
+    return send_from_directory(Diretorio + "\\",filename)
+
+@app.route("/PlaylistAdd",methods=["GET","POST"])
+def PlaylistAdd():
+    data = request.get_json()
+    Titulo = data["Name"]
+    Image = data["Image"]
+    Array = data["MusicList"]
+    Adicionar_Musica(Titulo,Image,"NULL","NULL",Array,"Playlist")
+    return "",201
+
+@app.route("/PlaylistSearch",methods=["GET","POST"])
+def PlaylistSearch():
+    try:
+        db = sqlite3.connect(Banco_de_Dados)
+        db.row_factory = sqlite3.Row
+        cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM Playlist ")
+        dados = cursor.fetchall()
+        return jsonify([dict(row) for row in dados])
+    except sqlite3.Error as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        db.close()
+
+@app.route("/DadosMusic",methods=["GET","POST"])
+def DadosMusic():
+    try:
+        db = sqlite3.connect(Banco_de_Dados)
+        db.row_factory = sqlite3.Row
+        cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM Musicas ")
+        dados = cursor.fetchall()
+        return jsonify([dict(row) for row in dados])
+    except sqlite3.Error as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        db.close()
+
+@app.route("/PlaylistItem",methods=["GET","POST"])
+def PlaylistItem():
+    data = request.get_json()
+    DB = sqlite3.connect(Banco_de_Dados)
+    cursor = DB.cursor()
+    cursor.execute(f"""SELECT List FROM Playlist WHERE titulo='{data["Id"]}'""")
+    dados = cursor.fetchall()
+    Add = f'{str(dados)},{str(data["value"])}'
+    Array.append(Add)
+    for value in Array:
+        cursor.execute("UPDATE Playlist SET List = ? WHERE titulo = ?",(f"{(removeCaracter(str(value),'",|\\'))}",str(data["Id"])))
+        cursor.execute(" delete from Playlist where rowid not in(select min(rowid) from Playlist group by titulo);")
+    DB.commit()
+    return "",201
 
 if __name__ == "__main__":
-    # webview.start(debug=False,private_mode=False,http_server=True)
-    app.run(debug=True,port=5052)
+    # app.run(debug=True,port=6969)
+    webview.start(private_mode=False,http_server=True)

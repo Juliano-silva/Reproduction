@@ -1,103 +1,167 @@
-var array = []
-var APIBuscar = JSON.parse(localStorage.getItem("playlist"))
-
+var musicEscolhas = []
 function Playlist_Salvar() {
-    if (localStorage.playlist) {
-        array = JSON.parse(localStorage.getItem("playlist"))
-    }
-
-    array.push({
-        "Image": PlaylistImage.value,
-        "Name": PlaylistName.value,
-        "MúsicasList": []
+    location.reload()
+    $.ajax({
+        url: "/PlaylistAdd",
+        type: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'Image': PlaylistImage.value, "Name": PlaylistName.value, "MusicList": "[]" })
     })
-
-    localStorage.setItem("playlist", JSON.stringify(array))
 }
+document.getElementById("FecharPrincipal_Btn").addEventListener("click", function () {
+    document.getElementById("Playlist_Input").style.display = "none";
+    // document.getElementById("InfoMini").style.display = "block";
+});
 
+var Caixa_Principal = document.createElement("div")
+var Button_add = document.createElement("button")
+Caixa_Principal.id = "Caixa_Button"
+Button_add.innerText = "+"
+Button_add.addEventListener("click", function () {
+    document.getElementById("Playlist_Input").style.display = "block"
+})
 
-
-
-
-for (var Playlist_itens = 0; Playlist_itens < APIBuscar.length; Playlist_itens++) {
-    var Corpo = document.createElement("div")
-    var List_Body = document.createElement("div")
-    var Image = document.createElement("img")
-    var Titulo = document.createElement("h1")
-
-    var Itens = document.getElementById("Escolha_Itens_Playlist")
-
-    Image.src = APIBuscar[Playlist_itens].Image
-    Titulo.innerText = APIBuscar[Playlist_itens].Name
-
-    Corpo.append(Image, Titulo)
-    for (var i = 0; i < APIBuscar[Playlist_itens].MúsicasList.length; i++) {
-        var List = document.createElement("button")
-
-        Corpo.id = "Escolha_ITEM"
-        List.id = APIBuscar[Playlist_itens].MúsicasList[i]
-        List.className = i
-        List.innerText = String(APIBuscar[Playlist_itens].MúsicasList[i]).replace(/%C3%93/g, " ").replace(/%20/g, " ").split("/")[4]
-        Corpo.addEventListener("click", function () {
-            document.getElementById("Abrir_Playlist").style.display = "block"
-            document.getElementById("Escolha_Image_Playlist").src = Image.src
-            document.getElementById("Escolha_Name_Playlist").innerText = Titulo.innerText
-        })
-
-        List.addEventListener("click", function () {
-            ORIGINAL.src = this.id
-            ORIGINAL.play()
-            InfoMini.style.display = "block"
-            TP_Name.innerText = this.id
-            document.getElementById("Trás").className = this.className
-            document.getElementById("Frente").className = this.className
-        })
-
-        document.getElementById("Trás").addEventListener("click",Tras)
-        document.getElementById("Frente").addEventListener("click",Frente)
-
-
-        Escolha_Itens_Playlist.append(List)
-        Corpo.append(List_Body)
+function Remover_Character(char, to_remove) {
+    var new_String = char
+    for (var i in to_remove) {
+        new_String = String(new_String).replace(to_remove[i], "")
     }
-    document.getElementById("Playlist_List").append(Corpo)
+    return new_String
 }
 
-function RetornarDados() {
+function Play(Id) {
+    document.getElementById("InfoMini").style.display = "block"
+    document.getElementById("TPImage").src = Id.Image
+    document.getElementById("TP_Name").innerText = Id.titulo
+    document.getElementById("TP_Artista").innerText = Id.Artista
+    ORIGINAL.src = `/music/${Id.titulo}`;
     ORIGINAL.play();
-  }
+}
 
-  // Próxima Música
-  function Frente() {
-    var IDs = this.className
-    IDs++
-    document.getElementById("Trás").className = IDs
-    document.getElementById("Frente").className = IDs
-    ORIGINAL.src = APIBuscar[0].MúsicasList[IDs]
-    RetornarDados()
-  }
-  // Trás Música
-  function Tras() {
-    var IDs = this.className
-    IDs--
-    document.getElementById("Trás").className = IDs
-    document.getElementById("Frente").className = IDs
-    ORIGINAL.src = APIBuscar[0].MúsicasList[IDs]
-    RetornarDados()
-  }
 
-// Play e Pause Event
-document.getElementById("BtnPauseEvent").addEventListener("click", function () {
-    ORIGINAL.pause();
-    document.getElementById("BtnPauseEvent").style.display = "none";
-    document.getElementById("BtnPlayEvent").style.display = "inline-block";
+function Retorn_List_Music(Retorno, Position, Tamanho) {
+    var Escolha_Body = document.getElementById("Escolha_Itens_Playlist")
+    fetch("/DadosMusic").then((response) => response.json().then((dados) => {
+        for (var i = 0; i < dados.length; i++) {
+            var Name = String(dados[i].titulo)
+            var Replace_Retorno = String(Retorno).replace(/.mp4]/, ".mp4")
+            if (Name == String(Replace_Retorno)) {
+                var Caixa_Label = document.createElement("div")
+                var Caixa_Texto = document.createElement("div")
+                var Titulo = document.createElement("h1")
+                var Thumb = document.createElement("img")
+                var Artist = document.createElement("p")
+                var Position_Num = document.createElement("h2")
+                Position_Num.innerText = Position
+                Titulo.innerText = String(dados[i].titulo).replace(".mp4", "")
+                Artist.innerText = String(dados[i].Artista)
+                Thumb.src = dados[i].Image
+                Caixa_Label.id = "Caixa_Label"
+                Caixa_Label.className = i
+                Caixa_Texto.id = "Caixa_Texto_Body_Playlist"
+                Caixa_Texto.append(Titulo, Artist)
+                Caixa_Label.append(Position_Num, Thumb, Caixa_Texto)
+                Escolha_Body.append(Caixa_Label)
+                musicEscolhas.push(i)
+                Caixa_Label.addEventListener("click", function () {
+                    Play(dados[this.className])
+                    var MusicIDs = this.className
+                    for (var x = 0; x < musicEscolhas.length; x++) {
+                        if (MusicIDs == musicEscolhas[x]) {
+                            var contador = x
+                        }
+                    }
+                    document.getElementById("Frente").addEventListener("click", function (event) {
+                        for (var x = 0; x < musicEscolhas.length; x++) {
+                            if (MusicIDs == musicEscolhas[x]) {
+                                if(contador <= musicEscolhas.length){
+                                    contador++    
+                                }else{
+                                    contador = 0
+                                }
+                                Play(dados[musicEscolhas[contador]])
+                            }
+                        }
+                    })
+
+                    document.getElementById("Trás").addEventListener("click", function (event) {
+                        for (var x = 0; x < musicEscolhas.length; x++) {
+                            if (MusicIDs == musicEscolhas[x]) {
+                                if(contador <= 0){
+                                    contador = 0
+                                }else{
+                                    contador--
+                                }
+                                Play(dados[musicEscolhas[contador]])
+                            }
+                        }
+                    })
+                })
+            }
+        }
+
+        for (var x = 0; x < musicEscolhas.length; x++) {
+            document.getElementById("Randomizar").addEventListener("click", function () {
+                var MusicRandom = musicEscolhas[Math.floor(Math.random() * musicEscolhas.length)]
+                ORIGINAL.src = `/music/${dados[MusicRandom].titulo}`;
+                ORIGINAL.play();
+                document.getElementById("TP_Name").innerHTML = String(dados[MusicRandom].titulo).replace(".mp4", "")
+                document.getElementById("TP_Artista").innerHTML = dados[MusicRandom].Artista
+                document.getElementById("TPImage").src = dados[MusicRandom].Image
+            })
+        }
+    }))
+}
+
+
+
+var NormalVolume = document.getElementById("NormalVolume");
+function Normal_Volume() {
+    Volume.value = "0.5";
+    document.querySelectorAll("audio").forEach((el) => (el.volume = "0.5"));
+}
+
+// Normal Velocidade Btn
+var PlayBack = document.getElementById("PlayBack");
+function Normal_Velocidade() {
+    document.querySelectorAll("audio").forEach((el) => (el.playbackRate = 1));
+    document.getElementById("PlayBack").value = "5";
+}
+
+// Volume Function
+Volume.addEventListener("change", function () {
+    var VolumeValor = Volume.value;
+    document.querySelectorAll("audio").forEach((el) => (el.volume = VolumeValor));
 });
 
-document.getElementById("BtnPlayEvent").addEventListener("click", function () {
-    ORIGINAL.play();
-    document.getElementById("BtnPauseEvent").style.display = "inline-block";
-    document.getElementById("BtnPlayEvent").style.display = "none";
+PlayBack.addEventListener("change", function () {
+    var ValorPlay = PlayBack.value;
+    document.querySelectorAll("audio").forEach((el) => (el.playbackRate = ValorPlay));
 });
+
+ORIGINAL.ontimeupdate = function () {
+    progressed2.style.width = Math.floor((ORIGINAL.currentTime * 100) / ORIGINAL.duration) + "%";
+};
+
+progress_bar2.onclick = function (e) {
+    ORIGINAL.currentTime = (e.offsetX / progress_bar2.offsetWidth) * ORIGINAL.duration;
+}
+
+
+// Function Recomeçar
+function Recomeçar() {
+    document.querySelectorAll("audio").forEach((el) => (el.currentTime = 0));
+}
+
+// Function Maior 5
+function Mais5() {
+    document.querySelectorAll("audio").forEach((el) => (el.currentTime += 1));
+}
+
+// Function Menor 5
+function Menos5() {
+    document.querySelectorAll("audio").forEach((el) => (el.currentTime -= 1));
+}
 
 // Mute
 MuteeDismute.addEventListener("click", function () {
@@ -114,21 +178,50 @@ MuteeDismute.addEventListener("click", function () {
     }
 });
 
-// Recomeçar Function
-Recomeçar.addEventListener("click", function () {
-    document
-      .querySelectorAll("audio")
-      .forEach((el) => (el.currentTime = 0));
-  });
-  // Mais 5 Function
-  Mais5.addEventListener("click", function () {
-    document
-      .querySelectorAll("audio")
-      .forEach((el) => (el.currentTime += 1));
-  });
-  // Menos 5 Function
-  Menos5.addEventListener("click", function () {
-    document
-      .querySelectorAll("audio")
-      .forEach((el) => (el.currentTime -= 1));
-  });
+fetch("/PlaylistSearch").then(function (response) {
+    response.json().then((data) => {
+        Caixa_Principal.append(Button_add)
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].titulo != "") {
+                var Caixa = document.createElement("div")
+                var Image = document.createElement("div")
+                var Titulo = document.createElement("h1")
+                var Sub_Titulo = document.createElement("h6")
+                Caixa.id = i
+                Image.style.backgroundImage = `url(${data[i].Image})`
+                Titulo.innerText = data[i].titulo
+
+                Caixa.addEventListener("click", function () {
+                    var Listar = String(Remover_Character(data[this.id].List, "][','", "")).split(")]")
+                    document.getElementById("Abrir_Playlist").style.display = "block"
+                    var Transform_Array = new Set(Listar)
+                    var ListarUnico = Array.from(Transform_Array)
+                    var Tamanho = parseInt(ListarUnico.length)
+                    document.getElementById("Escolha_Playlist_Num").innerText = `Playlist ${data[this.id].id}`
+                    document.getElementById("Escolha_Image_Playlist").src = data[this.id].Image
+                    document.getElementById("Escolha_Name_Playlist").innerText = data[this.id].titulo
+                    document.getElementById("Escolha_Informações").innerText = `Quantidades de Músicas foi ${Tamanho - 1}`
+                    for (var j = 1; j < ListarUnico.length; j++) {
+                        if (ListarUnico[j] != "") {
+                            Retorn_List_Music(ListarUnico[j], j, ListarUnico.length)
+                        }
+                    }
+                })
+                var Listar = String(Remover_Character(data[i].List, "][','", "")).split(")]")
+                if (data[i].List == "[]") {
+                    Sub_Titulo.innerText = `Quantidade de Músicas 0`
+                } else {
+                    Sub_Titulo.innerText = `Quantidade de Músicas ${Listar.length - 1}`
+                }
+                Caixa.append(Image, Titulo, Sub_Titulo)
+                document.getElementById("Playlist_List").append(Caixa)
+            }
+        }
+        document.getElementById("Playlist_List").append(Caixa_Principal)
+    })
+})
+
+document.getElementById("FecharPrincipal").addEventListener("click",function(){
+    document.getElementById("Abrir_Playlist").style.display = "none"
+})
+

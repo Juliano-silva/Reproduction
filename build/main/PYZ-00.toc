@@ -1,4 +1,5 @@
-('C:\\Users\\sustu\\Pictures\\Programmation\\Python\\Flask\\ReproductionAPP\\build\\main\\PYZ-00.pyz',
+('C:\\Users\\sustu\\Pictures\\Programmation\\Projeto '
+ 'Principais\\ReproductionAPP\\build\\main\\PYZ-00.pyz',
  [('__future__',
    'C:\\Users\\sustu\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\__future__.py',
    'PYMODULE'),
@@ -2231,9 +2232,6 @@
    'PYMODULE'),
   ('werkzeug.wsgi',
    'C:\\Users\\sustu\\AppData\\Roaming\\Python\\Python312\\site-packages\\werkzeug\\wsgi.py',
-   'PYMODULE'),
-  ('win32con',
-   'C:\\Users\\sustu\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\win32\\lib\\win32con.py',
    'PYMODULE'),
   ('winotify',
    'C:\\Users\\sustu\\AppData\\Roaming\\Python\\Python312\\site-packages\\winotify\\__init__.py',
